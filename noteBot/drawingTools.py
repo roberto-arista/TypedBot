@@ -6,7 +6,7 @@
 
 # -- Modules -- #
 import drawBot as dB
-from fontTools.misc import Transform
+from fontTools.misc.transform import Transform
 from structures import Box, Color, Point
 from collections.abc import Iterable
 from typing import List, Optional, Dict
@@ -91,7 +91,13 @@ def newPage(width: float, height: float):
     dB.newPage(width, height)
 
 def newPageDefault(size: str):
-    assert size in ['10x14', '10x14Landscape', 'A0', 'A0Landscape', 'A1', 'A1Landscape', 'A2', 'A2Landscape', 'A3', 'A3Landscape', 'A4', 'A4Landscape', 'A4Small', 'A4SmallLandscape', 'A5', 'A5Landscape', 'B4', 'B4Landscape', 'B5', 'B5Landscape', 'Executive', 'ExecutiveLandscape', 'Folio', 'FolioLandscape', 'Ledger', 'LedgerLandscape', 'Legal', 'LegalLandscape', 'Letter', 'LetterLandscape', 'LetterSmall', 'LetterSmallLandscape', 'Quarto', 'QuartoLandscape', 'Statement', 'StatementLandscape', 'Tabloid', 'TabloidLandscape']
+    assert size in set(['10x14', '10x14Landscape', 'A0', 'A0Landscape', 'A1', 'A1Landscape',
+                        'A2', 'A2Landscape', 'A3', 'A3Landscape', 'A4', 'A4Landscape',
+                        'A4Small', 'A4SmallLandscape', 'A5', 'A5Landscape', 'B4', 'B4Landscape',
+                        'B5', 'B5Landscape', 'Executive', 'ExecutiveLandscape', 'Folio', 'FolioLandscape',
+                        'Ledger', 'LedgerLandscape', 'Legal', 'LegalLandscape', 'Letter', 'LetterLandscape',
+                        'LetterSmall', 'LetterSmallLandscape', 'Quarto', 'QuartoLandscape',
+                        'Statement', 'StatementLandscape', 'Tabloid', 'TabloidLandscape'])
     dB.newPage(size)
 
 def newDrawing():
