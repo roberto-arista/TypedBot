@@ -9,17 +9,83 @@ from __future__ import annotations
 from typing import Optional, List, Union, Tuple
 from copy import deepcopy
 
-from structures import Point, Box, Alignment, LineCap, LineJoin
+from .structures import Point, Box, Alignment, LineCap, LineJoin
+from .formattedString import FormattedString
 
 from AppKit import NSBezierPath
-from fontTools.misc import Transform
+from fontTools.misc.transform import Transform
 import drawBot as dB
-from formattedString import FormattedString
+from drawBot.context.baseContext import BezierPath as BP
+from drawBot.context.baseContext import BezierContour as BC
 
 
-class BezierPath(dB.BezierPath):
+# -- Primitives -- #
+def rect(box: Box):
+    dB.rect(*box)
 
-    def __init__(path: dB.BezierPath, glyphSet=Optional[List[str]]):
+def oval(box: Box):
+    dB.oval(*box)
+
+def line(pt1: Point, pt2: Point):
+    dB.line(pt1, pt2)
+
+def polygon(*points: List[Point], close: bool = True):
+    dB.polygon(*points, close=close)
+
+
+# -- Drawing Paths -- #
+    def newPath():
+        dB.newPath()
+
+    def moveTo(point: Point):
+        dB.moveTo(point)
+
+    def lineTo(point: Point):
+        dB.lineTo(point)
+
+    def curveTo(point1: Point, point2: Point, point3: Point):
+        dB.curveTo(point1, point2, point3)
+
+    def qCurveTo(*points: List[Point]):
+        dB.qCurveTo(*points)
+
+    def arc(center: Point, radius: float, startAngle: float, endAngle: float, clockwise: bool):
+        dB.arc(center, radius, startAngle, endAngle, clockwise)
+
+    def arcTo(point1: Point, point2: Point, radius: float):
+        dB.arcTo(point1, point2, radius)
+
+    def closePath():
+        dB.closePath()
+
+    def drawPath(path: Optional[BezierPath] = None):
+        dB.drawPath(path)
+
+    def clipPath(path: Optional[BezierPath] = None):
+        dB.clipPath(path)
+
+
+# -- Path Properties -- #
+def strokeWidth(value: float):
+    dB.strokeWidth(value)
+
+def miterLimit(value: float):
+    dB.miterLimit(value)
+
+def lineJoin(value: float):
+    dB.lineJoin(value)
+
+def lineCap(value: float):
+    dB.lineCap(value)
+
+def lineDash(*values: List[float]):
+    dB.lineDash(*values)
+
+
+# -- BezierPath -- #
+class BezierPath(BP):
+
+    def __init__(self, path: Optional[BP] = None, glyphSet: Optional[List[str]] = None):
         super().__init__(path=path, glyphSet=glyphSet)
 
     def moveTo(self, point: Point):
@@ -168,7 +234,7 @@ class BezierPath(dB.BezierPath):
         return tuple(Point(*pt) for pt in super().offCurvePoints)
 
     @property
-    def contours(self) -> Tuple[dB.BezierContour]:
+    def contours(self) -> Tuple[BC]:
         return super().contours
 
     @property

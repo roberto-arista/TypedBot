@@ -1,5 +1,180 @@
+#!/usr/bin/env python3
 
-import drawBot as dB
+# ----------------- #
+# Formatted Strings #
+# ----------------- #
 
-class FormattedString(dB.FormattedString):
-    pass
+# -- Modules -- #
+from typing import Union, Optional, List, Tuple
+from copy import deepcopy
+
+import drawBot.context.baseContext.FormattedString as FS
+from AppKit import NSMutableAttributedString, NSSize
+
+from .structures import Color, CMYKColor, Alignment, OTFeature
+from .customTypes import Tabs
+
+# -- Object -- #
+class FormattedString(FS):
+
+    def __init__(self, txt: Union[str, FS] = "",
+                       font: Optional[str] = None,
+                       fontSize: float = 10,
+                       fallbackFont: Optional[str] = None,
+                       fill: Color = Color(r=0, g=0, b=0, a=1),
+                       cmykFill: CMYKColor = CMYKColor(c=0, m=0, y=0, k=0, a),
+                       stroke: Color = Color(r=0, g=0, b=0, a=0),
+                       cmykStroke: CMYKColor = CMYKColor(c=0, m=0, y=0, k=0, a),
+                       strokeWidth: float = 1,
+                       align=Alignment.left,
+                       lineHeight: float = 12,
+                       tracking: float = 0,
+                       baselineShift: float = 0,
+                       openTypeFeatures=None,
+                       tabs: Tabs = [],
+                       language: Optional[str] = None,
+                       indent: float = 0,
+                       tailIndent: float = 0,
+                       firstLineIndent: float = 0,
+                       paragraphTopSpacing: float = 0,
+                       paragraphBottomSpacing: float = 0):
+        super().__init__(txt, font, fontSize, fallbackFont, fill, cmykFill, stroke, cmykStroke, strokeWidth, align, lineHeight, tracking, baselineShift, openTypeFeatures, tabs, language, indent, tailIndent, firstLineIndent, paragraphTopSpacing, paragraphBottomSpacing)
+
+    def __add__(self, txt: Union[str, FormattedString]):
+        self.append(txt)
+
+    def __getitem__(self, index: int) -> str:
+        return super().__getitem__(index)
+
+    def __len__(self) -> int:
+        return len(super().__len__())
+
+    def __repr__(self) -> str:
+        return f"{super()}"
+
+    def font(self, fontNameOrPath: str, fontSize: float = None, fontNumber: int = 0):
+        super().font(fontNameOrPath, fontSize, fontNumber)
+
+    def fallbackFont(self, fontNameOrPath: str, fontNumber: int = 0):
+        super().fallbackFont(fontNameOrPath, fontNumber)
+
+    def fontSize(self, fontSize: float):
+        super().fontSize(fontSize)
+
+    def fill(self, clr: Color):
+        super().fill(*clr)
+
+    def stroke(self, clr: Color):
+        super().fill(*clr)
+
+    def cmykFill(self, clr: CMYKColor):
+        super().cmykFill(*clr)
+
+    def cmykStroke(self, clr: CMYKColor):
+        super().cmykStroke(*clr)
+
+    def strokeWidth(self, strokeWidth: float):
+        super().strokeWidth(strokeWidth)
+
+    def align(self, align: Alignment):
+        super().align(align)
+
+    def lineHeight(self, lineHeight: float):
+        super().lineHeight(lineHeight)
+
+    def tracking(self, tracking: float):
+        super().tracking(tracking)
+
+    def baselineShift(self, baselineShift: float):
+        super().baselineShift(baselineShift)
+
+    def underline(self, underline: float):
+        super().underline(underline)
+
+    def url(self, url: str):
+        super().url(url)
+
+    FeaturesList = List[Tuple[OTFeature, bool]]
+    def openTypeFeatures(self, features: FeaturesList):
+        pass
+
+    def resetFeatures(self):
+        super().openTypeFeatures(resetFeatures=True)
+
+    def listOpenTypeFeatures(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
+        return super().listOpenTypeFeatures(fontNameOrPath, fontNumber)
+
+    def fontVariations(self, *args, **axes):
+        pass
+
+    def listFontVariations(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
+        return super().listFontVariations(fontNameOrPath, fontNumber)
+
+    def listNamedInstances(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
+        return super().listNamedInstances(fontNameOrPath, fontNumber)
+
+    def tabs(self, tabs: Tabs):
+        pass
+
+    def indent(self, indent: float):
+        super().indent(indent)
+
+    def tailIndent(self, indent: float):
+        super().tailIndent(indent)
+
+    def firstLineIndent(self, indent: float):
+        super().firstLineIndent(indent)
+
+    def paragraphTopSpacing(self, value: float):
+        super().paragraphTopSpacing(value)
+
+    def paragraphBottomSpacing(self, value: float):
+        super().paragraphBottomSpacing(value)
+
+    def language(self, language: str):
+        super().language(language)
+
+    def size(self) -> NSSize:
+        return super().size()
+
+    def getNSObject(self) -> NSMutableAttributedString:
+        return super().getNSObject()
+
+    def copy(self) -> FormattedString:
+        return deepcopy(self)
+
+    def fontContainsCharacters(self, characters: str) -> bool:
+        return super().fontContainsCharacters(characters)
+
+    def fontContainsGlyph(self, glyphName: str) -> bool:
+        return super().fontContainsGlyph(glyphName)
+
+    def fontFilePath(self) -> str:
+        return super().fontFilePath()
+
+    def fontFileFontNumber(self) -> int:
+        return super().fontFileFontNumber()
+
+    def listFontGlyphNames(self) -> List[str]:
+        return super().listFontGlyphNames()
+
+    def fontAscender(self) -> float:
+        return super().fontAscender()
+
+    def fontDescender(self) -> float:
+        return super().fontDescender()
+
+    def fontXHeight(self) -> float:
+        return super().fontXHeight()
+
+    def fontCapHeight(self) -> float:
+        return super().fontCapHeight()
+
+    def fontLeading(self) -> float:
+        return super().fontLeading()
+
+    def fontLineHeight(self) -> float:
+        return super().fontLineHeight()
+
+    def appendGlyph(self, *glyphNames: List[str]):
+        super().appendGlyph(*glyphNames)
