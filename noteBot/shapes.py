@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-# ---------- #
-# BezierPath #
-# ---------- #
+# ------ #
+# Shapes #
+# ------ #
 
 # -- Modules -- #
 from __future__ import annotations

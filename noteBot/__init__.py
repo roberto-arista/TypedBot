@@ -1,5 +1,5 @@
-from .bezierPath import BezierPath
-from .formattedString import FormattedString
+from .shapes import BezierPath
+from .text import FormattedString
 from .drawingTools import oval, line, polygon, strokeWidth, miterLimit, lineJoin, lineCap, lineDash, fill, stroke
 from .drawingTools import linearGradient, radialGradient, shadow, blendMode, colorSpace, listColorSpaces, newPage
 from .drawingTools import newPageDefault, newDrawing, endDrawing, getSize, getAllSizes, width, height, pageCount

@@ -5,9 +5,18 @@
 # ---------- #
 
 # -- Modules -- #
+from typing import Tuple
 from dataclasses import dataclass, astuple
 from enum import Enum, auto
 
+from .structures import Alignment
+
+
+# -- Custom Types for typing -- #
+Tab = Tuple[float, Alignment]
+
+
+# -- Structures + Enumerations -- #
 class AutoName(Enum):
     def _generate_next_value_(name, start, count, last_values):
         return name
@@ -22,6 +31,11 @@ class LineCap(AutoName):
 
 class LineJoin(AutoName):
     round = auto()
+
+class Underline(AutoName):
+    single = auto()
+    double = auto()
+    thick = auto()
 
 class OTFeature(AutoName):
     c2pc = auto()
