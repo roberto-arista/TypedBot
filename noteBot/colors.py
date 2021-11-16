@@ -11,8 +11,10 @@ import drawBot as dB
 
 from .structures import Color, CMYKColor, Point
 
+
 # -- Constants -- #
 CMYK_TRANSPARENT = CMYKColor(c=0, m=0, y=0, k=0, a=0)
+
 
 # -- Colors -- #
 def fill(color: Color):
@@ -49,13 +51,19 @@ def cmykStroke(color: CMYKColor):
 def cmykShadow(offset: float, blur: float = 0, color: CMYKColor = CMYK_TRANSPARENT):
     dB.cmykShadow(offset, blur, color)
 
-def blendMode(operation: Optional[str]):
-    assert operation in [None, 'normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'colorDodge', 'colorBurn', 'softLight', 'hardLight', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity', 'clear', 'copy', 'sourceIn', 'sourceOut', 'sourceAtop', 'destinationOver', 'destinationIn', 'destinationOut', 'destinationAtop', 'xOR', 'plusDarker', 'plusLighter']
+def blendMode(operation: str):
+    assert operation in ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'colorDodge', 'colorBurn', 'softLight', 'hardLight', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity', 'clear', 'copy', 'sourceIn', 'sourceOut', 'sourceAtop', 'destinationOver', 'destinationIn', 'destinationOut', 'destinationAtop', 'xOR', 'plusDarker', 'plusLighter']
     dB.blendMode(operation)
 
-def colorSpace(colorSpace: Optional[str]):
-    assert colorSpace in [None, 'genericRGB', 'adobeRGB1998', 'sRGB', 'genericGray', 'genericGamma22Gray']
+def resetBlendMode():
+    dB.blendMode(None)
+
+def colorSpace(colorSpace: str):
+    assert colorSpace in ['genericRGB', 'adobeRGB1998', 'sRGB', 'genericGray', 'genericGamma22Gray']
     dB.colorSpace(colorSpace)
+
+def resetColorSpace():
+    dB.colorSpace(None)
 
 def listColorSpaces() -> List[str]:
     return dB.listColorSpaces()
