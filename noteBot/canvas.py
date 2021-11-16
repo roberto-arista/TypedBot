@@ -4,6 +4,7 @@
 # Canvas #
 # ------ #
 
+
 # -- Modules -- #
 from typing import Dict
 from pathlib import Path
@@ -14,8 +15,10 @@ from fontTools.misc.transform import Transform
 
 from .structures import Box, Point
 
+
 # -- Constants -- #
 ORIGIN = Point(0, 0)
+
 
 # -- Pages -- #
 def newPage(width: float, height: float):
@@ -71,6 +74,7 @@ def linkRect(name: str, box: Box):
 def linkDestination(name: str, pt: Point):
     dB.linkDestination(name=name, xy=pt)
 
+
 # -- Transformations -- #
 def translate(pt: Point):
     dB.translate(x=pt.x, y=pt.y)
@@ -89,6 +93,7 @@ def transform(t: Transform):
 
 def savedState():
     dB.savedState()
+
 
 # -- Transformations -- #
 def printInstructions():
@@ -154,7 +159,7 @@ def saveMP4(path, ffmpegCodec: str = 'libx264',
     assert(path.suffix.lower() == '.mp4')
     dB.saveImage(path, ffmpegCodec, imageResolution, antiAliasing, imagePNGGamma, imagePNGInterlaced, imageColorSyncProfileData)
 
-def saveBMP(path: Path, imageResolution: float = 72,
+def saveICNS(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False):
     assert(path.suffix.lower() == '.icns')
