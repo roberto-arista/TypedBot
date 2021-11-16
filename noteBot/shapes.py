@@ -34,35 +34,35 @@ def polygon(*points: List[Point], close: bool = True):
 
 
 # -- Drawing Paths -- #
-    def newPath():
-        dB.newPath()
+def newPath():
+    dB.newPath()
 
-    def moveTo(point: Point):
-        dB.moveTo(point)
+def moveTo(point: Point):
+    dB.moveTo(point)
 
-    def lineTo(point: Point):
-        dB.lineTo(point)
+def lineTo(point: Point):
+    dB.lineTo(point)
 
-    def curveTo(point1: Point, point2: Point, point3: Point):
-        dB.curveTo(point1, point2, point3)
+def curveTo(point1: Point, point2: Point, point3: Point):
+    dB.curveTo(point1, point2, point3)
 
-    def qCurveTo(*points: List[Point]):
-        dB.qCurveTo(*points)
+def qCurveTo(*points: List[Point]):
+    dB.qCurveTo(*points)
 
-    def arc(center: Point, radius: float, startAngle: float, endAngle: float, clockwise: bool):
-        dB.arc(center, radius, startAngle, endAngle, clockwise)
+def arc(center: Point, radius: float, startAngle: float, endAngle: float, clockwise: bool):
+    dB.arc(center, radius, startAngle, endAngle, clockwise)
 
-    def arcTo(point1: Point, point2: Point, radius: float):
-        dB.arcTo(point1, point2, radius)
+def arcTo(point1: Point, point2: Point, radius: float):
+    dB.arcTo(point1, point2, radius)
 
-    def closePath():
-        dB.closePath()
+def closePath():
+    dB.closePath()
 
-    def drawPath(path: Optional[BezierPath] = None):
-        dB.drawPath(path)
+def drawPath(path: Optional[BezierPath] = None):
+    dB.drawPath(path)
 
-    def clipPath(path: Optional[BezierPath] = None):
-        dB.clipPath(path)
+def clipPath(path: Optional[BezierPath] = None):
+    dB.clipPath(path)
 
 
 # -- Path Properties -- #
@@ -72,10 +72,10 @@ def strokeWidth(value: float):
 def miterLimit(value: float):
     dB.miterLimit(value)
 
-def lineJoin(value: float):
+def lineJoin(value: LineJoin):
     dB.lineJoin(value)
 
-def lineCap(value: float):
+def lineCap(value: LineCap):
     dB.lineCap(value)
 
 def lineDash(*values: List[float]):
