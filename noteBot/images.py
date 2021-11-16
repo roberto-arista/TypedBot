@@ -20,6 +20,7 @@ def image(path: Path, point: Point, alpha: float = 1, pageNumber: Optional[int] 
         path = f'{path}'
     dB.image(path, point, alpha, pageNumber)
 
+
 # -- Image Properties -- #
 def imageSize(path: Path, pageNumber: Optional[int] = None) -> Tuple[float, float]:
     if isinstance(path, Path):
@@ -37,6 +38,7 @@ def imageResolution(path: Path) -> float:
 def numberOfPages(path: Path):
     if isinstance(path, Path):
         path = f'{path}'
+
 
 # -- Image Object -- #
 class ImageObject(IM):
@@ -86,476 +88,475 @@ class ImageObject(IM):
         super().colorClamp(minComponents, maxComponents)
 
     def colorControls(self, saturation=None, brightness=None, contrast=None):
-        pass
+        super().colorControls(saturation, brightness, contrast)
 
     def colorMatrix(self, RVector=None, GVector=None, BVector=None, AVector=None, biasVector=None):
-        pass
+        super().colorMatrix(RVector, GVector, BVector, AVector, biasVector)
 
     def colorPolynomial(self, redCoefficients=None, greenCoefficients=None, blueCoefficients=None, alphaCoefficients=None):
-        pass
+        super().colorPolynomial(redCoefficients, greenCoefficients, blueCoefficients, alphaCoefficients)
 
     def exposureAdjust(self, EV=None):
-        pass
+        super().exposureAdjust(EV)
 
     def gammaAdjust(self, power=None):
-        pass
+        super().gammaAdjust(power)
 
     def hueAdjust(self, angle=None):
-        pass
+        super().hueAdjust(angle)
 
     def linearToSRGBToneCurve(self):
-        pass
+        super().linearToSRGBToneCurve()
 
     def SRGBToneCurveToLinear(self):
-        pass
+        super().SRGBToneCurveToLinear()
 
     def temperatureAndTint(self, neutral=None, targetNeutral=None):
-        pass
+        super().temperatureAndTint(neutral, targetNeutral)
 
     def toneCurve(self, point0=None, point1=None, point2=None, point3=None, point4=None):
-        pass
+        super().toneCurve(point0, point1, point2, point3, point4)
 
     def vibrance(self, amount=None):
-        pass
+        super().vibrance(amount)
 
     def whitePointAdjust(self, color=None):
-        pass
+        super().whitePointAdjust(color)
 
     def colorCrossPolynomial(self, redCoefficients=None, greenCoefficients=None, blueCoefficients=None):
-        pass
+        super().colorCrossPolynomial(redCoefficients, greenCoefficients, blueCoefficients)
 
     def colorInvert(self):
-        pass
+        super().colorInvert()
 
     def colorMap(self, gradientImage=None):
-        pass
+        super().colorMap(gradientImage)
 
     def colorMonochrome(self, color=None, intensity=None):
-        pass
+        super().colorMonochrome(color, intensity)
 
     def colorPosterize(self, levels=None):
-        pass
+        super().colorPosterize(levels)
 
     def falseColor(self, color0=None, color1=None):
-        pass
+        super().falseColor(color0, color1)
 
     def maskToAlpha(self):
-        pass
+        super().maskToAlpha()
 
     def maximumComponent(self):
-        pass
+        super().maximumComponent()
 
     def minimumComponent(self):
-        pass
+        super().minimumComponent()
 
     def photoEffectChrome(self):
-        pass
+        super().photoEffectChrome()
 
     def photoEffectFade(self):
-        pass
+        super().photoEffectFade()
 
     def photoEffectInstant(self):
-        pass
+        super().photoEffectInstant()
 
     def photoEffectMono(self):
-        pass
+        super().photoEffectMono()
 
     def photoEffectNoir(self):
-        pass
+        super().photoEffectNoir()
 
     def photoEffectProcess(self):
-        pass
+        super().photoEffectProcess()
 
     def photoEffectTonal(self):
-        pass
+        super().photoEffectTonal()
 
     def photoEffectTransfer(self):
-        pass
+        super().photoEffectTransfer()
 
     def sepiaTone(self, intensity=None):
-        pass
+        super().sepiaTone(intensity)
 
     def vignette(self, radius=None, intensity=None):
-        pass
+        super().vignette(radius, intensity)
 
     def vignetteEffect(self, center=None, intensity=None, radius=None):
-        pass
+        super().vignetteEffect(center, intensity, radius)
 
     def additionCompositing(self, backgroundImage=None):
-        pass
+        super().additionCompositing(backgroundImage)
 
     def colorBlendMode(self, backgroundImage=None):
-        pass
+        super().colorBlendMode(backgroundImage)
 
     def colorBurnBlendMode(self, backgroundImage=None):
-        pass
+        super().colorBurnBlendMode(backgroundImage)
 
     def colorDodgeBlendMode(self, backgroundImage=None):
-        pass
+        super().colorDodgeBlendMode(backgroundImage)
 
     def darkenBlendMode(self, backgroundImage=None):
-        pass
+        super().darkenBlendMode(backgroundImage)
 
     def differenceBlendMode(self, backgroundImage=None):
-        pass
+        super().differenceBlendMode(backgroundImage)
 
     def divideBlendMode(self, backgroundImage=None):
-        pass
+        super().divideBlendMode(backgroundImage)
 
     def exclusionBlendMode(self, backgroundImage=None):
-        pass
+        super().exclusionBlendMode(backgroundImage)
 
     def hardLightBlendMode(self, backgroundImage=None):
-        pass
+        super().hardLightBlendMode(backgroundImage)
 
     def hueBlendMode(self, backgroundImage=None):
-        pass
+        super().hueBlendMode(backgroundImage)
 
     def lightenBlendMode(self, backgroundImage=None):
-        pass
+        super().lightenBlendMode(backgroundImage)
 
     def linearBurnBlendMode(self, backgroundImage=None):
-        pass
+        super().linearBurnBlendMode(backgroundImage)
 
     def linearDodgeBlendMode(self, backgroundImage=None):
-        pass
+        super().linearDodgeBlendMode(backgroundImage)
 
     def luminosityBlendMode(self, backgroundImage=None):
-        pass
+        super().luminosityBlendMode(backgroundImage)
 
     def maximumCompositing(self, backgroundImage=None):
-        pass
+        super().maximumCompositing(backgroundImage)
 
     def minimumCompositing(self, backgroundImage=None):
-        pass
+        super().minimumCompositing(backgroundImage)
 
     def multiplyBlendMode(self, backgroundImage=None):
-        pass
+        super().multiplyBlendMode(backgroundImage)
 
     def multiplyCompositing(self, backgroundImage=None):
-        pass
+        super().multiplyCompositing(backgroundImage)
 
     def overlayBlendMode(self, backgroundImage=None):
-        pass
+        super().overlayBlendMode(backgroundImage)
 
     def pinLightBlendMode(self, backgroundImage=None):
-        pass
+        super().pinLightBlendMode(backgroundImage)
 
     def saturationBlendMode(self, backgroundImage=None):
-        pass
+        super().saturationBlendMode(backgroundImage)
 
     def screenBlendMode(self, backgroundImage=None):
-        pass
+        super().screenBlendMode(backgroundImage)
 
     def softLightBlendMode(self, backgroundImage=None):
-        pass
+        super().softLightBlendMode(backgroundImage)
 
     def sourceAtopCompositing(self, backgroundImage=None):
-        pass
+        super().sourceAtopCompositing(backgroundImage)
 
     def sourceInCompositing(self, backgroundImage=None):
-        pass
+        super().sourceInCompositing(backgroundImage)
 
     def sourceOutCompositing(self, backgroundImage=None):
-        pass
+        super().sourceOutCompositing(backgroundImage)
 
     def sourceOverCompositing(self, backgroundImage=None):
-        pass
+        super().sourceOverCompositing(backgroundImage)
 
     def subtractBlendMode(self, backgroundImage=None):
-        pass
+        super().subtractBlendMode(backgroundImage)
 
     def bumpDistortion(self, center=None, radius=None, scale=None):
-        pass
+        super().bumpDistortion(center, radius, scale)
 
     def bumpDistortionLinear(self, center=None, radius=None, angle=None, scale=None):
-        pass
+        super().bumpDistortionLinear(center, radius, angle, scale)
 
     def circleSplashDistortion(self, center=None, radius=None):
-        pass
+        super().circleSplashDistortion(center, radius)
 
     def circularWrap(self, center=None, radius=None, angle=None):
-        pass
+        super().circularWrap(center, radius, angle)
 
     def droste(self, insetPoint0=None, insetPoint1=None, strands=None, periodicity=None, rotation=None, zoom=None):
-        pass
+        super().droste(insetPoint0, insetPoint1, strands, periodicity, rotation, zoom)
 
     def displacementDistortion(self, displacementImage=None, scale=None):
-        pass
+        super().displacementDistortion(displacementImage, scale)
 
     def glassDistortion(self, texture=None, center=None, scale=None):
-        pass
+        super().glassDistortion(texture, center, scale)
 
     def glassLozenge(self, point0=None, point1=None, radius=None, refraction=None):
-        pass
+        super().glassLozenge(point0, point1, radius, refraction)
 
     def holeDistortion(self, center=None, radius=None):
-        pass
+        super().holeDistortion(center, radius)
 
     def pinchDistortion(self, center=None, radius=None, scale=None):
-        pass
+        super().pinchDistortion(center, radius, scale)
 
     def stretchCrop(self, size=None, cropAmount=None, centerStretchAmount=None):
-        pass
+        super().stretchCrop(size, cropAmount, centerStretchAmount)
 
     def torusLensDistortion(self, center=None, radius=None, width=None, refraction=None):
-        pass
+        super().torusLensDistortion(center, radius, width, refraction)
 
     def twirlDistortion(self, center=None, radius=None, angle=None):
-        pass
+        super().twirlDistortion(center, radius, angle)
 
     def vortexDistortion(self, center=None, radius=None, angle=None):
-        pass
+        super().vortexDistortion(center, radius, angle)
 
     def aztecCodeGenerator(self, size, message=None, correctionLevel=None, layers=None, compactStyle=None):
-        pass
+        super().aztecCodeGenerator(size, message, correctionLevel, layers, compactStyle)
 
     def QRCodeGenerator(self, size, message=None, correctionLevel=None):
-        pass
+        super().QRCodeGenerator(size, message, correctionLevel)
 
     def code128BarcodeGenerator(self, size, message=None, quietSpace=None):
-        pass
+        super().code128BarcodeGenerator(size, message, quietSpace)
 
     def checkerboardGenerator(self, size, center=None, color0=None, color1=None, width=None, sharpness=None):
-        pass
+        super().checkerboardGenerator(size, center, color0, color1, width, sharpness)
 
     def constantColorGenerator(self, size, color=None):
-        pass
+        super().constantColorGenerator(size, color)
 
     def lenticularHaloGenerator(self, size, center=None, color=None, haloRadius=None, haloWidth=None, haloOverlap=None, striationStrength=None, striationContrast=None, time=None):
-        pass
+        super().lenticularHaloGenerator(size, center, color, haloRadius, haloWidth, haloOverlap, striationStrength, striationContrast, time)
 
     def PDF417BarcodeGenerator(self, size, message=None, minWidth=None, maxWidth=None, minHeight=None, maxHeight=None, dataColumns=None, rows=None, preferredAspectRatio=None, compactionMode=None, compactStyle=None, correctionLevel=None, alwaysSpecifyCompaction=None):
-        pass
+        super().PDF417BarcodeGenerator(size, message, minWidth, maxWidth, minHeight, maxHeight, dataColumns, rows, preferredAspectRatio, compactionMode, compactStyle, correctionLevel, alwaysSpecifyCompaction)
 
     def randomGenerator(self, size):
-        pass
+        super().randomGenerator(size)
 
     def starShineGenerator(self, size, center=None, color=None, radius=None, crossScale=None, crossAngle=None, crossOpacity=None, crossWidth=None, epsilon=None):
-        pass
+        super().starShineGenerator(size, center, color, radius, crossScale, crossAngle, crossOpacity, crossWidth, epsilon)
 
     def stripesGenerator(self, size, center=None, color0=None, color1=None, width=None, sharpness=None):
-        pass
+        super().stripesGenerator(size, center, color0, color1, width, sharpness)
 
     def sunbeamsGenerator(self, size, center=None, color=None, sunRadius=None, maxStriationRadius=None, striationStrength=None, striationContrast=None, time=None):
-        pass
+        super().sunbeamsGenerator(size, center, color, sunRadius, maxStriationRadius, striationStrength, striationContrast, time)
 
     def crop(self, rectangle=None):
-        pass
+        super().crop(rectangle)
 
     def lanczosScaleTransform(self, scale=None, aspectRatio=None):
-        pass
+        super().lanczosScaleTransform(scale, aspectRatio)
 
     def perspectiveCorrection(self, topLeft=None, topRight=None, bottomRight=None, bottomLeft=None):
-        pass
+        super().perspectiveCorrection(topLeft, topRight, bottomRight, bottomLeft)
 
     def perspectiveTransform(self, topLeft=None, topRight=None, bottomRight=None, bottomLeft=None):
-        pass
+        super().perspectiveTransform(topLeft, topRight, bottomRight, bottomLeft)
 
     def straightenFilter(self, angle=None):
-        pass
+        super().straightenFilter(angle)
 
     def gaussianGradient(self, size, center=None, color0=None, color1=None, radius=None):
-        pass
+        super().gaussianGradient(size, center, color0, color1, radius)
 
     def linearGradient(self, size, point0=None, point1=None, color0=None, color1=None):
-        pass
+        super().linearGradient(size, point0, point1, color0, color1)
 
     def radialGradient(self, size, center=None, radius0=None, radius1=None, color0=None, color1=None):
-        pass
+        super().radialGradient(size, center, radius0, radius1, color0, color1)
 
     def circularScreen(self, center=None, width=None, sharpness=None):
-        pass
+        super().circularScreen(center, width, sharpness)
 
     def CMYKHalftone(self, center=None, width=None, angle=None, sharpness=None, GCR=None, UCR=None):
-        pass
+        super().CMYKHalftone(center, width, angle, sharpness, GCR, UCR)
 
     def dotScreen(self, center=None, angle=None, width=None, sharpness=None):
-        pass
+        super().dotScreen(center, angle, width, sharpness)
 
     def hatchedScreen(self, center=None, angle=None, width=None, sharpness=None):
-        pass
+        super().hatchedScreen(center, angle, width, sharpness)
 
     def lineScreen(self, center=None, angle=None, width=None, sharpness=None):
-        pass
+        super().lineScreen(center, angle, width, sharpness)
 
     def areaAverage(self, extent=None):
-        pass
+        super().areaAverage(extent)
 
     def areaHistogram(self, extent=None, count=None, scale=None):
-        pass
+        super().areaHistogram(extent, count, scale)
 
     def rowAverage(self, extent=None):
-        pass
+        super().rowAverage(extent)
 
     def columnAverage(self, extent=None):
-        pass
+        super().columnAverage(extent)
 
     def histogramDisplayFilter(self, height=None, highLimit=None, lowLimit=None):
-        pass
+        super().histogramDisplayFilter(height, highLimit, lowLimit)
 
     def areaMaximum(self, extent=None):
-        pass
+        super().areaMaximum(extent)
 
     def areaMinimum(self, extent=None):
-        pass
+        super().areaMinimum(extent)
 
     def areaMaximumAlpha(self, extent=None):
-        pass
+        super().areaMaximumAlpha(extent)
 
     def areaMinimumAlpha(self, extent=None):
-        pass
+        super().areaMinimumAlpha(extent)
 
     def sharpenLuminance(self, sharpness=None):
-        pass
+        super().sharpenLuminance(sharpness)
 
     def unsharpMask(self, radius=None, intensity=None):
-        pass
+        super().unsharpMask(radius, intensity)
 
     def blendWithAlphaMask(self, backgroundImage=None, maskImage=None):
-        pass
+        super().blendWithAlphaMask(backgroundImage, maskImage)
 
     def blendWithMask(self, backgroundImage=None, maskImage=None):
-        pass
+        super().blendWithMask(backgroundImage, maskImage)
 
     def bloom(self, radius=None, intensity=None):
-        pass
+        super().bloom(radius, intensity)
 
     def comicEffect(self):
-        pass
+        super().comicEffect()
 
     def convolution3X3(self, weights=None, bias=None):
-        pass
+        super().convolution3X3(weights, bias)
 
     def convolution5X5(self, weights=None, bias=None):
-        pass
+        super().convolution5X5(weights, bias)
 
     def convolution7X7(self, weights=None, bias=None):
-        pass
+        super().convolution7X7(weights, bias)
 
     def convolution9Horizontal(self, weights=None, bias=None):
-        pass
+        super().convolution9Horizontal(weights, bias)
 
     def convolution9Vertical(self, weights=None, bias=None):
-        pass
+        super().convolution9Vertical(weights, bias)
 
     def crystallize(self, radius=None, center=None):
-        pass
+        super().crystallize(radius, center)
 
     def depthOfField(self, point0=None, point1=None, saturation=None, unsharpMaskRadius=None, unsharpMaskIntensity=None, radius=None):
-        pass
+        super().depthOfField(point0, point1, saturation, unsharpMaskRadius, unsharpMaskIntensity, radius)
 
     def edges(self, intensity=None):
-        pass
+        super().edges(intensity)
 
     def edgeWork(self, radius=None):
-        pass
+        super().edgeWork(radius)
 
     def gloom(self, radius=None, intensity=None):
-        pass
+        super().gloom(radius, intensity)
 
     def heightFieldFromMask(self, radius=None):
-        pass
+        super().heightFieldFromMask(radius)
 
     def hexagonalPixellate(self, center=None, scale=None):
-        pass
+        super().hexagonalPixellate(center, scale)
 
     def highlightShadowAdjust(self, highlightAmount=None, shadowAmount=None):
-        pass
+        super().highlightShadowAdjust(highlightAmount, shadowAmount)
 
     def lineOverlay(self, noiseLevel=None, sharpness=None, edgeIntensity=None, threshold=None, contrast=None):
-        pass
+        super().lineOverlay(noiseLevel, sharpness, edgeIntensity, threshold, contrast)
 
     def pixellate(self, center=None, scale=None):
-        pass
+        super().pixellate(center, scale)
 
     def pointillize(self, radius=None, center=None):
-        pass
+        super().pointillize(radius, center)
 
     def shadedMaterial(self, shadingImage=None, scale=None):
-        pass
+        super().shadedMaterial(shadingImage, scale)
 
     def spotColor(self, centerColor1=None, replacementColor1=None, closeness1=None, contrast1=None, centerColor2=None, replacementColor2=None, closeness2=None, contrast2=None, centerColor3=None, replacementColor3=None, closeness3=None, contrast3=None):
-        pass
+        super().spotColor(centerColor1, replacementColor1, closeness1, contrast1, centerColor2, replacementColor2, closeness2, contrast2, centerColor3, replacementColor3, closeness3, contrast3)
 
     def spotLight(self, lightPosition=None, lightPointsAt=None, brightness=None, concentration=None, color=None):
-        pass
+        super().spotLight(lightPosition, lightPointsAt, brightness, concentration, color)
 
     def affineClamp(self, transform=None):
-        pass
+        super().affineClamp(transform)
 
     def affineTile(self, transform=None):
-        pass
+        super().affineTile(transform)
 
     def eightfoldReflectedTile(self, center=None, angle=None, width=None):
-        pass
+        super().eightfoldReflectedTile(center, angle, width)
 
     def fourfoldReflectedTile(self, center=None, angle=None, acuteAngle=None, width=None):
-        pass
+        super().fourfoldReflectedTile(center, angle, acuteAngle, width)
 
     def fourfoldRotatedTile(self, center=None, angle=None, width=None):
-        pass
+        super().fourfoldRotatedTile(center, angle, width)
 
     def fourfoldTranslatedTile(self, center=None, angle=None, acuteAngle=None, width=None):
-        pass
+        super().fourfoldTranslatedTile(center, angle, acuteAngle, width)
 
     def glideReflectedTile(self, center=None, angle=None, width=None):
-        pass
+        super().glideReflectedTile(center, angle, width)
 
     def kaleidoscope(self, count=None, center=None, angle=None):
-        pass
+        super().kaleidoscope(count, center, angle)
 
     def opTile(self, center=None, scale=None, angle=None, width=None):
-        pass
+        super().opTile(center, scale, angle, width)
 
     def parallelogramTile(self, center=None, angle=None, acuteAngle=None, width=None):
-        pass
+        super().parallelogramTile(center, angle, acuteAngle, width)
 
     def perspectiveTile(self, topLeft=None, topRight=None, bottomRight=None, bottomLeft=None):
-        pass
+        super().perspectiveTile(topLeft, topRight, bottomRight, bottomLeft)
 
     def sixfoldReflectedTile(self, center=None, angle=None, width=None):
-        pass
+        super().sixfoldReflectedTile(center, angle, width)
 
     def sixfoldRotatedTile(self, center=None, angle=None, width=None):
-        pass
+        super().sixfoldRotatedTile(center, angle, width)
 
     def triangleTile(self, center=None, angle=None, width=None):
-        pass
+        super().triangleTile(center, angle, width)
 
     def twelvefoldReflectedTile(self, center=None, angle=None, width=None):
-        pass
+        super().twelvefoldReflectedTile(center, angle, width)
 
     def accordionFoldTransition(self, targetImage=None, bottomHeight=None, numberOfFolds=None, foldShadowAmount=None, time=None):
-        pass
+        super().accordionFoldTransition(targetImage, bottomHeight, numberOfFolds, foldShadowAmount, time)
 
     def barsSwipeTransition(self, targetImage=None, angle=None, width=None, barOffset=None, time=None):
-        pass
+        super().barsSwipeTransition(targetImage, angle, width, barOffset, time)
 
     def copyMachineTransition(self, targetImage=None, extent=None, color=None, time=None, angle=None, width=None, opacity=None):
-        pass
+        super().copyMachineTransition(targetImage, extent, color, time, angle, width, opacity)
 
     def disintegrateWithMaskTransition(self, targetImage=None, maskImage=None, time=None, shadowRadius=None, shadowDensity=None, shadowOffset=None):
-        pass
+        super().disintegrateWithMaskTransition(targetImage, maskImage, time, shadowRadius, shadowDensity, shadowOffset)
 
     def dissolveTransition(self, targetImage=None, time=None):
-        pass
+        super().dissolveTransition(targetImage, time)
 
     def flashTransition(self, targetImage=None, center=None, extent=None, color=None, time=None, maxStriationRadius=None, striationStrength=None, striationContrast=None, fadeThreshold=None):
-        pass
+        super().flashTransition(targetImage, center, extent, color, time, maxStriationRadius, striationStrength, striationContrast, fadeThreshold)
 
     def modTransition(self, targetImage=None, center=None, time=None, angle=None, radius=None, compression=None):
-        pass
+        super().modTransition(targetImage, center, time, angle, radius, compression)
 
     def pageCurlTransition(self, targetImage=None, backsideImage=None, shadingImage=None, extent=None, time=None, angle=None, radius=None):
-        pass
+        super().pageCurlTransition(targetImage, backsideImage, shadingImage, extent, time, angle, radius)
 
     def pageCurlWithShadowTransition(self, targetImage=None, backsideImage=None, extent=None, time=None, angle=None, radius=None, shadowSize=None, shadowAmount=None, shadowExtent=None):
-        pass
+        super().pageCurlWithShadowTransition(targetImage, backsideImage, extent, time, angle, radius, shadowSize, shadowAmount, shadowExtent)
 
     def rippleTransition(self, targetImage=None, shadingImage=None, center=None, extent=None, time=None, width=None, scale=None):
-        pass
+        super().rippleTransition(targetImage, shadingImage, center, extent, time, width, scale)
 
     def swipeTransition(self, targetImage=None, extent=None, color=None, time=None, angle=None, width=None, opacity=None):
-        pass
-
+        super().swipeTransition(targetImage, extent, color, time, angle, width, opacity)
