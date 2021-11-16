@@ -28,9 +28,13 @@ class Alignment(AutoName):
 
 class LineCap(AutoName):
     round = auto()
+    butt = auto()
+    square = auto()
 
 class LineJoin(AutoName):
     round = auto()
+    miter = auto()
+    bevel = auto()
 
 class Underline(AutoName):
     single = auto()
