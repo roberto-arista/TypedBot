@@ -15,17 +15,11 @@ from .structures import Color, CMYKColor, Point
 CMYK_TRANSPARENT = CMYKColor(c=0, m=0, y=0, k=0, a=0)
 
 # -- Colors -- #
-def fill(color: Optional[Color]):
-    if not color:
-        dB.fill(color)
-    else:
-        dB.fill(*color)
+def fill(color: Color):
+    dB.fill(*color)
 
-def stroke(color: Optional[Color]):
-    if not color:
-        dB.stroke(color)
-    else:
-        dB.stroke(*color)
+def stroke(color: Color):
+    dB.stroke(*color)
 
 def linearGradient(startPt: Point, endPoint: Point,
                    colors: List[Color], locations=List[float]):
