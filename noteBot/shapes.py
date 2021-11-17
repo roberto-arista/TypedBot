@@ -10,7 +10,7 @@ from typing import Optional, List, Union, Tuple
 from copy import deepcopy
 
 from .structures import Point, Box, Alignment, LineCap, LineJoin
-from .formattedString import FormattedString
+from .text import FormattedString
 
 from AppKit import NSBezierPath
 from fontTools.misc.transform import Transform
