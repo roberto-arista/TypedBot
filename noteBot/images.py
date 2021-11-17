@@ -16,28 +16,25 @@ from .structures import Point, Color, Box
 
 # -- Drawing Images -- #
 def image(path: Path, point: Point, alpha: float = 1, pageNumber: Optional[int] = None):
-    if isinstance(path, Path):
-        path = f'{path}'
-    dB.image(path, point, alpha, pageNumber)
+    strPath = path if not isinstance(path, Path) else f'{path}'
+    dB.image(strPath, point, alpha, pageNumber)
 
 
 # -- Image Properties -- #
 def imageSize(path: Path, pageNumber: Optional[int] = None) -> Tuple[float, float]:
-    if isinstance(path, Path):
-        path = f'{path}'
-    return dB.imageSize(path, pageNumber)
+    strPath = path if not isinstance(path, Path) else f'{path}'
+    return dB.imageSize(strPath, pageNumber)
 
 def imagePixelColor(path: Path, point: Point) -> Color:
     return Color(*dB.imagePixelColor(path, point))
 
 def imageResolution(path: Path) -> float:
-    if isinstance(path, Path):
-        path = f'{path}'
-    return dB.imageResolution(path)
+    strPath = path if not isinstance(path, Path) else f'{path}'
+    return dB.imageResolution(strPath)
 
-def numberOfPages(path: Path):
-    if isinstance(path, Path):
-        path = f'{path}'
+def numberOfPages(path: Path) -> int:
+    strPath = path if not isinstance(path, Path) else f'{path}'
+    return dB.numberOfPages(strPath)
 
 
 # -- Image Object -- #
@@ -46,19 +43,18 @@ class ImageObject(IM):
     def __init__(self, path: Optional[Path] = None):
         super().__init__(path)
 
-    def size() -> Tuple[float, float]:
+    def size(self) -> Tuple[float, float]:
         return super().size()
 
-    def offset() -> Point:
+    def offset(self) -> Point:
         return super().offset()
 
-    def clearFilters():
+    def clearFilters(self):
         super().clearFilters()
 
-    def open(path: Path):
-        if isinstance(path, Path):
-            path = f'{path}'
-        super().open(path)
+    def open(self, path: Path):
+        strPath = path if not isinstance(path, Path) else f'{path}'
+        super().open(strPath)
 
     def copy(self):
         pass
@@ -72,7 +68,7 @@ class ImageObject(IM):
     def gaussianBlur(self, radius: float = 0):
         super().gaussianBlur(radius)
 
-    def maskedVariableBlur(self, mask: Optional[ImageObject] = None, radius: float = 0):
+    def maskedVariableBlur(self, mask: ImageObject, radius: float = 0):
         super().maskedVariableBlur(mask, radius)
 
     def motionBlur(self, radius: float = 0, angle: float = 0):
