@@ -7,12 +7,14 @@
 # -- Modules -- #
 from typing import Union, Optional, List, Tuple
 from copy import deepcopy
+from pathlib import Path
 
-import drawBot.context.baseContext.FormattedString as FS
+import drawBot as dB
+from drawBot.context.baseContext import FormattedString as FS
 from AppKit import NSMutableAttributedString, NSSize
 
 from .structures import Color, CMYKColor, Alignment, OTFeature
-from .structures import Underline, Tab
+from .structures import Underline, Tab, Point, Box
 
 
 # -- Constants -- #
