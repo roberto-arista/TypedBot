@@ -60,14 +60,12 @@ def uninstallFont(path: Path):
 def font(fontNameOrPath: Union[str, Path],
          fontSize: Optional[float] = None,
          fontNumber: int = 0):
-    if isinstance(fontNameOrPath, Path):
-        fontNameOrPath = f'{fontNameOrPath}'
+    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
     dB.font(fontNameOrPath, fontSize, fontNumber)
 
 def fallbackFont(fontNameOrPath: Union[str, Path],
                  fontNumber: int = 0):
-    if isinstance(fontNameOrPath, Path):
-        fontNameOrPath = f'{fontNameOrPath}'
+    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
     dB.fallbackFont(fontNameOrPath, fontNumber)
 
 def fontSize(fontSize: float):
@@ -106,21 +104,19 @@ def openTypeFeatures(**features: FeaturesList):
 def resetFeatures():
     dB.openTypeFeatures(resetFeatures=True)
 
-def listOpenTypeFeatures(fontNameOrPath: Optional[Path] = None):
-    if isinstance(fontNameOrPath, Path):
-        fontNameOrPath = f'{fontNameOrPath}'
+def listOpenTypeFeatures(fontNameOrPath: Optional[Union[str, Path]] = None):
+    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
     dB.listOpenTypeFeatures(fontNameOrPath)
 
 def fontVariations(*args, **axes):
     pass
 
-def listFontVariations(fontNameOrPath: Optional[Path] = None) -> List:
-    if isinstance(fontNameOrPath, Path):
-        fontNameOrPath = f'{fontNameOrPath}'
+def listFontVariations(fontNameOrPath: Optional[Union[str, Path]] = None) -> List:
+    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
+    return dB.listFontVariations(fontNameOrPath)
 
-def listNamedInstances(fontNameOrPath: Optional[Path] = None) -> List[str]:
-    if isinstance(fontNameOrPath, Path):
-        fontNameOrPath = f'{fontNameOrPath}'
+def listNamedInstances(fontNameOrPath: Optional[Union[str, Path]] = None) -> List[str]:
+    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
     return dB.listNamedInstances(fontNameOrPath)
 
 
