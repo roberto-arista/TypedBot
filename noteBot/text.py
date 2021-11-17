@@ -24,7 +24,7 @@ FeaturesList = List[Tuple[OTFeature, bool]]
 
 # -- Drawing Text -- #
 def text(txt: DrawbotTxt, point: Point, align: Alignment = Alignment.left):
-    db.text(txt, point, align)
+    dB.text(txt, point, align)
 
 def textBox(txt: DrawbotTxt,
             box: Box,
