@@ -29,7 +29,7 @@ def text(txt: DrawbotTxt, point: Point, align: Alignment = Alignment.left):
 def textBox(txt: DrawbotTxt,
             box: Box,
             align: Alignment = Alignment.left) -> Optional[DrawbotTxt]:
-    dB.textBox(txt, box, align)
+    return dB.textBox(txt, box, align)
 
 def textSize(txt: DrawbotTxt,
              align: Optional[Alignment] = None,
