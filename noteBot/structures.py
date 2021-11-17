@@ -9,12 +9,6 @@ from typing import Tuple
 from dataclasses import dataclass, astuple
 from enum import Enum, auto
 
-from .structures import Alignment
-
-
-# -- Custom Types for typing -- #
-Tab = Tuple[float, Alignment]
-
 
 # -- Structures + Enumerations -- #
 class AutoName(Enum):
@@ -124,3 +118,7 @@ class Point:
 
     def __iter__(self):
         return iter(astuple(self))
+
+
+# -- Custom Types for typing -- #
+Tab = Tuple[float, Alignment]
