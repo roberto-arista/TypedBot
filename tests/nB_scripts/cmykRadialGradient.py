@@ -1,6 +1,6 @@
-import drawBot
-drawBot.size(200, 200)
-drawBot.cmykRadialGradient(
+import noteBot as nB
+nB.newPage(200, 200)
+nB.cmykRadialGradient(
     (0, 0),                         # startPoint
     (200, 200),                         # endPoint
     [(1, 0, 0, 1), (0, 0, 1, 0), (0, 1, 0, .2)],    # colors
@@ -8,4 +8,4 @@ drawBot.cmykRadialGradient(
     0,                                  # startRadius
     200                                 # endRadius
 )
-drawBot.rect(0, 0, 200, 200)
+nB.rect(0, 0, 200, 200)

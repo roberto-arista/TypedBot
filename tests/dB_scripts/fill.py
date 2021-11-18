@@ -1,5 +1,5 @@
 import drawBot
-drawBot.size(100, 100)
+drawBot.newPage(100, 100)
 drawBot.fill(.5, .5)
 drawBot.oval(0, 0, 100, 100)
 for x in range(10):

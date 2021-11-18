@@ -1,5 +1,6 @@
-import drawBot
-f = drawBot.FormattedString()
+import noteBot as nB
+
+f = nB.FormattedString()
 f.fontSize(40)
 f.font("Helvetica")
 f.align("left")
@@ -11,31 +12,31 @@ f.align("right")
 f.append("right\n")
 
 _, height = f.size()
-x, y = drawBot.width() * .25, 200
+x, y = nB.width() * .25, 200
 
-with drawBot.savedState():
-    drawBot.stroke(0)
-    drawBot.line((x, 0), (x, 1000))
+with nB.savedState():
+    nB.stroke(0)
+    nB.line((x, 0), (x, 1000))
 
 
-drawBot.text(f, (x, y))
+nB.text(f, (x, y))
 y += height
-drawBot.text(f, (x, y), align="left")
+nB.text(f, (x, y), align="left")
 y += height
-drawBot.text(f, (x, y), align="center")
+nB.text(f, (x, y), align="center")
 y += height
-drawBot.text(f, (x, y), align="right")
+nB.text(f, (x, y), align="right")
 
-x, y = drawBot.width() * .75, 200
-with drawBot.savedState():
-    drawBot.stroke(0)
-    drawBot.line((x, 0), (x, 1000))
+x, y = nB.width() * .75, 200
+with nB.savedState():
+    nB.stroke(0)
+    nB.line((x, 0), (x, 1000))
 
-b = drawBot.BezierPath()
+b = nB.BezierPath()
 b.text(f)
 b.text(f, offset=(0, height), align="left")
 b.text(f, offset=(0, height * 2), align="center")
 b.text(f, offset=(0, height * 3), align="right")
-drawBot.translate(x, y)
-drawBot.fill(1, 0, 0)
-drawBot.drawPath(b)
+nB.translate(x, y)
+nB.fill(1, 0, 0)
+nB.drawPath(b)

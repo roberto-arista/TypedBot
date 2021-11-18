@@ -1,6 +1,6 @@
 import drawBot
 drawBot.newDrawing()
-drawBot.size(200, 200)
+drawBot.newPage(200, 200)
 
 def rotateScale(r, s, center):
     drawBot.rotate(r, center=center)

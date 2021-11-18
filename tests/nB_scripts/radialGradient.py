@@ -1,6 +1,6 @@
-import drawBot
-drawBot.size(200, 200)
-drawBot.radialGradient(
+import noteBot as nB
+nB.newPage(200, 200)
+nB.radialGradient(
     (0, 0),                         # startPoint
     (200, 200),                         # endPoint
     [(1, 0, 0), (0, 0, 1), (0, 1, 0)],  # colors
@@ -8,4 +8,4 @@ drawBot.radialGradient(
     0,                                  # startRadius
     200                                 # endRadius
 )
-drawBot.rect(0, 0, 200, 200)
+nB.rect(0, 0, 200, 200)

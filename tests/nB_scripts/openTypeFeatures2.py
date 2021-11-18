@@ -1,4 +1,4 @@
-from drawBot import *
+from nB import *
 
 size(200, 200)
 

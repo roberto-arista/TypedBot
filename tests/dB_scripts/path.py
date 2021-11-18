@@ -1,5 +1,5 @@
 import drawBot
-drawBot.size(200, 200)
+drawBot.newPage(200, 200)
 
 drawBot.newPath()
 drawBot.moveTo((20, 20))

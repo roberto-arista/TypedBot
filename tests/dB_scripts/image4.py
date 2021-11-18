@@ -1,6 +1,6 @@
 import pathlib
 import drawBot
-drawBot.size(500, 500)
+drawBot.newPage(500, 500)
 imagePath = "../data/drawBot.pdf"
 w, h = drawBot.imageSize(imagePath)
 drawBot.save()

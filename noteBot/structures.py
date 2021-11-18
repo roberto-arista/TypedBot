@@ -84,7 +84,10 @@ class Color:
     r: float
     g: float
     b: float
-    a: float
+    a: float = 1
+
+    def __getitem__(self, index) -> float:
+        return astuple(self)[index]
 
     def __iter__(self):
         return iter(astuple(self))
@@ -95,7 +98,10 @@ class CMYKColor:
     m: float
     y: float
     k: float
-    a: float
+    a: float = 1
+
+    def __getitem__(self, index) -> float:
+        return astuple(self)[index]
 
     def __iter__(self):
         return iter(astuple(self))
@@ -122,3 +128,9 @@ class Point:
 
 # -- Custom Types for typing -- #
 Tab = Tuple[float, Alignment]
+
+
+# -- Recurrent Colors -- #
+WHITE = Color(r=1, g=1, b=1, a=1)
+BLACK = Color(r=0, g=0, b=0, a=1)
+TRANSPARENT = Color(r=0, g=0, b=0, a=0)

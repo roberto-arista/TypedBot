@@ -25,12 +25,7 @@ def stroke(color: Color):
 
 def linearGradient(startPt: Point, endPoint: Point,
                    colors: List[Color], locations=List[float]):
-    dB.linearGradient(
-        startPt=startPt,
-        endPoint=endPoint,
-        colors=colors,
-        locations=locations,
-    )
+    dB.linearGradient(startPt, endPoint, [tuple(c) for c in colors], locations)
 
 def radialGradient(startPoint: Point, endPoint: Point,
                    colors=List[Color], locations=List[float],
@@ -47,6 +42,12 @@ def cmykFill(color: CMYKColor):
 
 def cmykStroke(color: CMYKColor):
     dB.cmykStroke(*color)
+
+def cmykLinearGradient(startPoint: Point, endPoint: Point, colors: List[CMYKColor], locations: List[float]):
+    dB.cmykLinearGradient(startPoint, endPoint, colors, locations)
+
+def cmykRadialGradient(startPoint: Point, endPoint: Point, colors: List[CMYKColor], locations: List[float], startRadius: float = 0, endRadius: float = 100):
+    dB.cmykRadialGradient(startPoint, endPoint, colors, locations, startRadius, endRadius)
 
 def cmykShadow(offset: float, blur: float = 0, color: CMYKColor = CMYK_TRANSPARENT):
     dB.cmykShadow(offset, blur, color)

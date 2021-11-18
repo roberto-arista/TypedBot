@@ -6,14 +6,14 @@
 
 
 # -- Modules -- #
-from typing import Dict
+from typing import Dict, Optional, Union
 from pathlib import Path
 
-from AppKit import NSPDFDocument
+from AppKit import NSData, NSColor   # PDFDocument
 import drawBot as dB
 from fontTools.misc.transform import Transform
 
-from .structures import Box, Point
+from .structures import Box, Point, Color, WHITE
 
 
 # -- Constants -- #
@@ -94,6 +94,11 @@ def transform(t: Transform):
 def savedState():
     dB.savedState()
 
+def save():
+    dB.save()
+
+def restore():
+    dB.restore()
 
 # -- Transformations -- #
 def printInstructions():
@@ -106,69 +111,75 @@ def savePDF(path: Path, multipage: bool = True):
 def savePNG(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False,
-                        imagePNGGamma: float,
-                        imagePNGInterlaced,
-                        imageColorSyncProfileData):
+                        imagePNGGamma: float = None,
+                        imagePNGInterlaced=None,
+                        imageColorSyncProfileData=None):
     assert(path.suffix.lower() == '.png')
-    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imagePNGGamma, imagePNGInterlaced, imageColorSyncProfileData)
+    kwargs = dict(
+        imageResolution=imageResolution,
+        antiAliasing=antiAliasing,
+        multipage=multipage,
+        # imagePNGGamma=imagePNGGamma,
+        # imagePNGInterlaced=imagePNGInterlaced,
+        # imageColorSyncProfileData=imageColorSyncProfileData,
+    )
+    dB.saveImage(f'{path}', **kwargs)
 
 def saveJPG(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False,
-                        imageJPEGCompressionFactor: float,
-                        imageJPEGProgressive: bool,
-                        imageFallbackBackgroundColor: Union[NSColor, Color]
-                        imageColorSyncProfileData: NSData):
+                        imageJPEGCompressionFactor: float = 1.0,
+                        imageJPEGProgressive: bool = True,
+                        imageFallbackBackgroundColor: Union[NSColor, Color] = WHITE,
+                        imageColorSyncProfileData: Optional[NSData] = None):
     assert(path.suffix.lower() == '.jpg')
     dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imageJPEGCompressionFactor, imageJPEGProgressive, imageFallbackBackgroundColor, imageColorSyncProfileData)
 
 def saveTIF(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False,
-                        imageTIFFCompressionMethod,
-                        imageColorSyncProfileData)
+                        imageTIFFCompressionMethod: Optional[str] = None,
+                        imageColorSyncProfileData: Optional[NSData] = None):
     assert(path.suffix.lower() in ['.tif', '.tiff'])
-    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imageJPEGCompressionFactor, imageJPEGProgressive, imageFallbackBackgroundColor, imageColorSyncProfileData)
+    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imageTIFFCompressionMethod, imageColorSyncProfileData)
 
-def saveSVG(path: Path, multipage: bool = False)
+def saveSVG(path: Path, multipage: bool = False):
     assert(path.suffix.lower() == '.svg')
     dB.saveImage(f'{path}', multipage)
 
 def saveGIF(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False,
-                        imageGIFDitherTransparency: bool,
-                        imageGIFRGBColorTable: NSData,
-                        imageColorSyncProfileData: NSData,
-                        imageGIFLoop: bool)
+                        imageGIFDitherTransparency: bool = False,
+                        imageGIFRGBColorTable: Optional[NSData] = None,
+                        imageColorSyncProfileData: Optional[NSData] = None,
+                        imageGIFLoop: bool = True):
     assert(path.suffix.lower() == '.gif')
-    dB.saveImage(f'path', imageResolution, antiAliasing, multipage, imageGIFDitherTransparency, imageGIFRGBColorTable, imageColorSyncProfileData, imageGIFLoop)
+    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imageGIFDitherTransparency, imageGIFRGBColorTable, imageColorSyncProfileData, imageGIFLoop)
 
 def saveBMP(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False):
     assert(path.suffix.lower() == '.bmp')
-    dB.saveImage(path, imageResolution, antiAliasing, multipage)
+    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage)
 
 def saveMP4(path, ffmpegCodec: str = 'libx264',
                   imageResolution: float = 72,
                   antiAliasing: bool = True,
-                  imagePNGGamma: float,
-                  imagePNGInterlaced: bool,
-                  imageColorSyncProfileData: NSData):
+                  imagePNGGamma: Optional[float] = None,
+                  imagePNGInterlaced: bool = True,
+                  imageColorSyncProfileData: Optional[NSData] = None):
     assert(path.suffix.lower() == '.mp4')
-    dB.saveImage(path, ffmpegCodec, imageResolution, antiAliasing, imagePNGGamma, imagePNGInterlaced, imageColorSyncProfileData)
+    dB.saveImage(f'{path}', ffmpegCodec, imageResolution, antiAliasing, imagePNGGamma, imagePNGInterlaced, imageColorSyncProfileData)
 
 def saveICNS(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False):
     assert(path.suffix.lower() == '.icns')
-    dB.saveImage(path, imageResolution, antiAliasing, multipage)
+    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage)
 
-def printImage(pdf: Optional[Path] = None):
-    if isinstance(pdf, Path):
-        pdf = f'{pdf}'
-    dB.printImage(pdf)
+def printImage(pdfPath: Optional[Path] = None):
+    dB.printImage(f'{pdfPath}')
 
-def pdfImage() -> NSPDFDocument:
+def pdfImage():    # -> PDFDocument:
     return dB.pdfImage()

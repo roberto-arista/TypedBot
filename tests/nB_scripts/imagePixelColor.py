@@ -2,7 +2,7 @@
 # It ensures that rgb values specified in fill() end up in image output without
 # being mangled by a color space (within 8-bit resulution).
 
-from drawBot import *
+from nB import *
 from PIL import Image
 
 canvasSize = 400

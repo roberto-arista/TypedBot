@@ -1,5 +1,5 @@
 import drawBot
-drawBot.size(200, 200)
+drawBot.newPage(200, 200)
 drawBot.text("hello world", (10, 10))
 drawBot.fill(1, 0, 0)
 drawBot.text("foo bar", (10, 30))

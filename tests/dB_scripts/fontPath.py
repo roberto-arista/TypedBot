@@ -1,5 +1,5 @@
 import drawBot
-drawBot.size(500, 70)
+drawBot.newPage(500, 70)
 fontPath = "../data/MutatorSans.ttf"
 drawBot.font(fontPath)
 drawBot.fontSize(20)

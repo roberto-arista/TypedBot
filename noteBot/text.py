@@ -18,24 +18,24 @@ from .structures import Underline, Tab, Point, Box
 
 
 # -- Constants -- #
-DrawbotTxt = Union[str, FormattedString]
+DrawbotTxt = Union[str]    # FormattedString]
 FeaturesList = List[Tuple[OTFeature, bool]]
 
 
 # -- Drawing Text -- #
 def text(txt: DrawbotTxt, point: Point, align: Alignment = Alignment.left):
-    dB.text(txt, point, align)
+    dB.text(txt, point, align.name)
 
 def textBox(txt: DrawbotTxt,
             box: Box,
             align: Alignment = Alignment.left) -> Optional[DrawbotTxt]:
-    return dB.textBox(txt, box, align)
+    return dB.textBox(txt, box, align.name)
 
 def textSize(txt: DrawbotTxt,
              align: Optional[Alignment] = None,
              width: Optional[float] = None,
              height: Optional[float] = None):
-    dB.textSize(txt, align, width, height)
+    dB.textSize(txt, align.name if align else None, width, height)
 
 def textOverflow():
     pass
@@ -123,33 +123,36 @@ def listNamedInstances(fontNameOrPath: Optional[Union[str, Path]] = None) -> Lis
 # -- Formatted String -- #
 class FormattedString(FS):
 
-    def __init__(self, txt: Union[str, FS] = "",
-                       font: Optional[str] = None,
-                       fontSize: float = 10,
-                       fallbackFont: Optional[str] = None,
-                       fill: Color = Color(r=0, g=0, b=0, a=1),
-                       cmykFill: CMYKColor = CMYKColor(c=0, m=0, y=0, k=0, a=0),
-                       stroke: Color = Color(r=0, g=0, b=0, a=0),
-                       cmykStroke: CMYKColor = CMYKColor(c=0, m=0, y=0, k=0, a=0),
-                       strokeWidth: float = 1,
-                       align=Alignment.left,
-                       lineHeight: float = 12,
-                       tracking: float = 0,
-                       baselineShift: float = 0,
-                       openTypeFeatures=None,
-                       tabs: List[Tab] = [],
-                       language: Optional[str] = None,
-                       indent: float = 0,
-                       tailIndent: float = 0,
-                       firstLineIndent: float = 0,
-                       paragraphTopSpacing: float = 0,
-                       paragraphBottomSpacing: float = 0):
-        super().__init__(txt, font, fontSize, fallbackFont, fill, cmykFill, stroke, cmykStroke, strokeWidth, align, lineHeight, tracking, baselineShift, openTypeFeatures, tabs, language, indent, tailIndent, firstLineIndent, paragraphTopSpacing, paragraphBottomSpacing)
+    """
+    font: Optional[str] = None,
+    fontSize: float = 10,
+    fallbackFont: Optional[str] = None,
+    fill: Color = Color(r=0, g=0, b=0, a=1),
+    cmykFill: CMYKColor = CMYKColor(c=0, m=0, y=0, k=0, a=0),
+    stroke: Color = Color(r=0, g=0, b=0, a=0),
+    cmykStroke: CMYKColor = CMYKColor(c=0, m=0, y=0, k=0, a=0),
+    strokeWidth: float = 1,
+    align=Alignment.left,
+    lineHeight: float = 12,
+    tracking: float = 0,
+    baselineShift: float = 0,
+    openTypeFeatures=None,
+    tabs: List[Tab] = [],
+    language: Optional[str] = None,
+    indent: float = 0,
+    tailIndent: float = 0,
+    firstLineIndent: float = 0,
+    paragraphTopSpacing: float = 0,
+    paragraphBottomSpacing: float = 0
+    """
+
+    def __init__(self, txt: Union[str, FS] = "", **kwargs):
+        super().__init__(txt, **kwargs)
 
     def __add__(self, txt: DrawbotTxt):
         self.append(txt)
 
-    def __getitem__(self, index: int) -> str:
+    def __getitem__(self, index: Union[int, slice]) -> str:
         return super().__getitem__(index)
 
     def __len__(self) -> int:
@@ -183,7 +186,7 @@ class FormattedString(FS):
         super().strokeWidth(strokeWidth)
 
     def align(self, align: Alignment):
-        super().align(align)
+        super().align(align.name).name
 
     def lineHeight(self, lineHeight: float):
         super().lineHeight(lineHeight)
@@ -245,7 +248,7 @@ class FormattedString(FS):
     def getNSObject(self) -> NSMutableAttributedString:
         return super().getNSObject()
 
-    def copy(self) -> FormattedString:
+    def copy(self): # -> FormattedString:
         return deepcopy(self)
 
     def fontContainsCharacters(self, characters: str) -> bool:

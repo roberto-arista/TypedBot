@@ -1,30 +1,30 @@
 import pathlib
-import drawBot
-drawBot.size(500, 500)
-imagePath = "../data/drawBot.pdf"
-w, h = drawBot.imageSize(imagePath)
-drawBot.save()
-drawBot.scale(250 / w)
-drawBot.image(imagePath, (0, 0))
-drawBot.restore()
+import noteBot as nB
+nB.newPage(500, 500)
+imagePath = "../data/nB.pdf"
+w, h = nB.imageSize(imagePath)
+nB.save()
+nB.scale(250 / w)
+nB.image(imagePath, (0, 0))
+nB.restore()
 
-imagePath = "../data/drawBot.png"
-w, h = drawBot.imageSize(imagePath)
-drawBot.save()
-drawBot.scale(250 / w)
-drawBot.image(imagePath, (w, 0))
-drawBot.restore()
+imagePath = "../data/nB.png"
+w, h = nB.imageSize(imagePath)
+nB.save()
+nB.scale(250 / w)
+nB.image(imagePath, (w, 0))
+nB.restore()
 
-imagePath = "../data/drawBot.jpg"
-w, h = drawBot.imageSize(imagePath)
-drawBot.save()
-drawBot.scale(250 / w)
-drawBot.image(imagePath, (0, h))
-drawBot.restore()
+imagePath = "../data/nB.jpg"
+w, h = nB.imageSize(imagePath)
+nB.save()
+nB.scale(250 / w)
+nB.image(imagePath, (0, h))
+nB.restore()
 
-imagePath = "../data/drawBot.bmp"
-w, h = drawBot.imageSize(imagePath)
-drawBot.save()
-drawBot.scale(250 / w)
-drawBot.image(pathlib.Path(imagePath), (w, h))  # verify that pathlib.Path objects work
-drawBot.restore()
+imagePath = "../data/nB.bmp"
+w, h = nB.imageSize(imagePath)
+nB.save()
+nB.scale(250 / w)
+nB.image(pathlib.Path(imagePath), (w, h))  # verify that pathlib.Path objects work
+nB.restore()

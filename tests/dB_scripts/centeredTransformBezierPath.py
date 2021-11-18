@@ -1,6 +1,6 @@
 import drawBot
 drawBot.newDrawing()
-drawBot.size(200, 200)
+drawBot.newPage(200, 200)
 
 testData = [
     ((25, 25, 50, 50), "rotate", (20,), (25, 25)),

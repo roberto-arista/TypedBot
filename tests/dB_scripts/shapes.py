@@ -1,5 +1,5 @@
 import drawBot
-drawBot.size(200, 200)
+drawBot.newPage(200, 200)
 drawBot.fill(0)
 drawBot.rect(10, 10, 100, 100)
 drawBot.fill(None)

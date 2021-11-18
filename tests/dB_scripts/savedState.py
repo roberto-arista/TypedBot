@@ -1,5 +1,5 @@
 import drawBot
-drawBot.size(200, 200)
+drawBot.newPage(200, 200)
 drawBot.stroke(0, 0, 1)
 drawBot.strokeWidth(5)
 with drawBot.savedState():

@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Optional, Tuple
 
 import drawBot as dB
-import drawBot.context.tools.imageObject.ImageObject as IM
+from drawBot.context.tools.imageObject import ImageObject as IM
 
 from .structures import Point, Color, Box
 
@@ -68,7 +68,8 @@ class ImageObject(IM):
     def gaussianBlur(self, radius: float = 0):
         super().gaussianBlur(radius)
 
-    def maskedVariableBlur(self, mask: ImageObject, radius: float = 0):
+    # def maskedVariableBlur(self, mask: ImageObject, radius: float = 0):
+    def maskedVariableBlur(self, mask, radius: float = 0):
         super().maskedVariableBlur(mask, radius)
 
     def motionBlur(self, radius: float = 0, angle: float = 0):

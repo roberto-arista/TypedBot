@@ -1,6 +1,6 @@
 import drawBot
 drawBot.newDrawing()
-drawBot.size(600, 100)
+drawBot.newPage(600, 100)
 p1 = drawBot.BezierPath()
 p1.oval(5, 5, 70, 70)
 p2 = drawBot.BezierPath()

@@ -1,6 +1,6 @@
-import drawBot
-drawBot.newDrawing()
-drawBot.size(200, 200)
+import noteBot as nB
+nB.newDrawing()
+nB.newPage(200, 200)
 
 testData = [
     ((25, 25, 50, 50), "rotate", (20,), (25, 25)),
@@ -9,13 +9,13 @@ testData = [
 ]
 
 for r, op, args, center in testData:
-    drawBot.fill(0)
-    bez = drawBot.BezierPath()
+    nB.fill(0)
+    bez = nB.BezierPath()
     bez.rect(*r)
-    drawBot.drawPath(bez)
-    with drawBot.savedState():
-        drawBot.fill(1, 0, 0, 0.5)
-        bez = drawBot.BezierPath()
+    nB.drawPath(bez)
+    with nB.savedState():
+        nB.fill(1, 0, 0, 0.5)
+        bez = nB.BezierPath()
         bez.rect(*r)
         getattr(bez, op)(*args, center=center)
-        drawBot.drawPath(bez)
+        nB.drawPath(bez)
