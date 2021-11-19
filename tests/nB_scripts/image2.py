@@ -1,6 +1,6 @@
 import noteBot as nB
 nB.newPage(500, 500)
-imagePath = "../data/nB.png"
+imagePath = "../data/drawBot.png"
 w, h = nB.imageSize(imagePath)
 nB.scale(250 / w)
 nB.image(imagePath, (0, 0))
