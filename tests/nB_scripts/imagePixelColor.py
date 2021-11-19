@@ -2,11 +2,12 @@
 # It ensures that rgb values specified in fill() end up in image output without
 # being mangled by a color space (within 8-bit resulution).
 
-from nB import *
+import noteBot as nB
 from PIL import Image
+from pathlib import Path
 
 canvasSize = 400
-size(canvasSize, canvasSize)
+nB.newPage(canvasSize, canvasSize)
 
 # colorSpace("sRGB")
 # colorSpace("genericRGB")
@@ -15,22 +16,21 @@ size(canvasSize, canvasSize)
 bands = 4
 bandWidth = canvasSize / bands
 
-fontSize(10)
+nB.fontSize(10)
 
 for i in range(bands):
     x = i * bandWidth
     for j in range(bands):
         y = j * bandWidth
-        r = i / bands
-        g = j / bands
-        b = 0.5
-        fill(r, g, b)
-        rect(x, y, bandWidth, bandWidth)
-        fill(0)
-        text("%s,%s,%s" % (r, g, b), (x + 3, y + 5))
 
-fn = "../tempTestData/tmp_imagePixelColor.png"
-saveImage(fn)
+        clr = nB.Color(i / bands, j / bands, 0.5)
+        nB.fill(clr)
+        nB.rect(nB.Box(x, y, bandWidth, bandWidth))
+        nB.fill(nB.Color(0, 0, 0, 1))
+        nB.text(f"{clr.r},{clr.g},{clr.b}", nB.Point(x + 3, y + 5))
+
+fn = Path("../tempTestData/tmp_imagePixelColor.png")
+nB.savePNG(fn)
 
 im = Image.open(fn)
 
@@ -38,7 +38,7 @@ for i in range(bands):
     x = (i + 0.5) * bandWidth
     for j in range(bands):
         y = (j + 0.5) * bandWidth
-        r, g, b, a = imagePixelColor(fn, (x, y))
+        r, g, b, a = nB.imagePixelColor(fn, nB.Point(x, y))
         print(" CG:", round(r, 4), round(g, 4), round(b, 4))
         r, g, b, a = im.getpixel((x, canvasSize - y))
         print("PIL:", round(r/255, 4), round(g/255, 4), round(b/255, 4))
