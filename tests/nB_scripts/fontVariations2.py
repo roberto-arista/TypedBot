@@ -1,10 +1,7 @@
 import noteBot as nB
 
 nB.newPage(200, 200)
-
-print("before")
 s = nB.FormattedString()
-print("after")
 
 s.font("Skia")
 s.fontSize(30)
