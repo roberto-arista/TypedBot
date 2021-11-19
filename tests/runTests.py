@@ -12,7 +12,6 @@ from pathlib import Path
 from importlib import import_module
 from PIL import Image, ImageChops
 
-# -- Constants -- #
 
 # -- Objects, Functions, Procedures -- #
 def runScriptAndSaveImage(path: Path, annotated: bool = False):
@@ -39,12 +38,14 @@ def compareImages(path1: Path, path2: Path) -> bool:
 noteBotScriptsFolder = Path('nB_scripts')
 drawBotScriptsFolder = Path('dB_scripts')
 
+skip = ['imageHTTP.py', 'fontAttributes.py', 'imagePixelColor.py', 'image4.py']
+
 # -- Instructions -- #
 if __name__ == '__main__':
     for nbScript, dBScript in zip(noteBotScriptsFolder.glob('*.py'), drawBotScriptsFolder.glob('*.py')):
-        print(nbScript, dBScript)
         assert nbScript.name == dBScript.name, 'mismatch in the scripts folders'
-        runScriptAndSaveImage(path=nbScript, annotated=True)
-        runScriptAndSaveImage(path=dBScript)
-        if not compareImages(nbScript.with_suffix('.png'), dBScript.with_suffix('.png')):
-            f'FAILING: {nbScript.name}'
+        if nbScript.name not in skip:
+            runScriptAndSaveImage(path=nbScript, annotated=True)
+            runScriptAndSaveImage(path=dBScript)
+            if not compareImages(nbScript.with_suffix('.png'), dBScript.with_suffix('.png')):
+                f'FAILING: {nbScript.name}'
