@@ -1,28 +1,28 @@
-from nB import *
+import noteBot as nB
 
-size(200, 200)
+nB.newPage(200, 200)
 
 # ['liga', 'dlig', 'tnum', 'pnum', 'titl', 'onum', 'lnum']
 
-font("HoeflerText-Regular")
-fontSize(20)
-print(listOpenTypeFeatures())
+nB.font("HoeflerText-Regular")
+nB.fontSize(20)
+print(nB.listOpenTypeFeatures())
 
-text("Hoefler Fact #123", (20, 170))
+nB.text("Hoefler Fact #123", nB.Point(20, 170))
 
-openTypeFeatures(None)
+nB.resetFeatures()
 
-openTypeFeatures(dlig=True)
-text("Hoefler Fact #123", (20, 140))
+nB.openTypeFeatures(dlig=True)
+nB.text("Hoefler Fact #123", nB.Point(20, 140))
 
-openTypeFeatures(lnum=True)
-text("Hoefler Fact #123", (20, 110))
+nB.openTypeFeatures(lnum=True)
+nB.text("Hoefler Fact #123", nB.Point(20, 110))
 
-openTypeFeatures(liga=False)
-text("Hoefler Fact #123", (20, 80))
+nB.openTypeFeatures(liga=False)
+nB.text("Hoefler Fact #123", nB.Point(20, 80))
 
-openTypeFeatures(liga=True, resetFeatures=False)
-text("Hoefler Fact #123", (20, 50))
+nB.openTypeFeatures(liga=True, resetFeatures=False)
+nB.text("Hoefler Fact #123", nB.Point(20, 50))
 
-openTypeFeatures(liga=False, resetFeatures=True)
-text("Hoefler Fact #123", (20, 20))
+nB.openTypeFeatures(liga=False, resetFeatures=True)
+nB.text("Hoefler Fact #123", nB.Point(20, 20))
