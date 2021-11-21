@@ -13,7 +13,7 @@ from importlib import import_module
 from PIL import Image, ImageChops
 
 
-# -- Objects, Functions, Procedures -- #
+# -- Helpers -- #
 def runScriptAndSaveImage(path: Path, annotated: bool = False):
     mod = nB if annotated else dB
     mod.newDrawing()
@@ -34,18 +34,23 @@ def compareImages(path1: Path, path2: Path) -> bool:
     return False if diff.getbbox() else True
 
 
-# -- Variables -- #
-noteBotScriptsFolder = Path('nB_scripts')
-drawBotScriptsFolder = Path('dB_scripts')
-
-skip = ['imageHTTP.py', 'fontAttributes.py', 'imagePixelColor.py', 'image4.py']
-
-# -- Instructions -- #
-if __name__ == '__main__':
+# -- Tests -- #
+def runTests():
     for nbScript, dBScript in zip(noteBotScriptsFolder.glob('*.py'), drawBotScriptsFolder.glob('*.py')):
         assert nbScript.name == dBScript.name, 'mismatch in the scripts folders'
         if nbScript.name not in skip:
             runScriptAndSaveImage(path=nbScript, annotated=True)
             runScriptAndSaveImage(path=dBScript)
-            if not compareImages(nbScript.with_suffix('.png'), dBScript.with_suffix('.png')):
-                f'FAILING: {nbScript.name}'
+            assert compareImages(nbScript.with_suffix('.png'), dBScript.with_suffix('.png'))
+
+
+# -- Variables -- #
+noteBotScriptsFolder = Path('nB_scripts')
+drawBotScriptsFolder = Path('dB_scripts')
+
+skip = ['imageHTTP.py', 'fontAttributes.py', 'imagePixelColor.py',
+        'image.py', 'image2.py', 'image3.py', 'image4.py', 'traceback.py']
+
+# -- Instructions -- #
+if __name__ == '__main__':
+    runTests()
