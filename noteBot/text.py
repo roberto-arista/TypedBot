@@ -13,40 +13,44 @@ import drawBot as dB
 from drawBot.context.baseContext import FormattedString as FS
 from AppKit import NSMutableAttributedString, NSSize
 
-from .structures import Color, CMYKColor, Alignment, OTFeature
-from .structures import Underline, Tab, Point, Box
-
-
-# -- Constants -- #
-DrawbotTxt = Union[str]    # FormattedString]
-FeaturesList = List[Tuple[OTFeature, bool]]
+from .structures import Color, CMYKColor, Alignment
+from .structures import Underline, Point, Box
+from .shapes import BezierPath
 
 
 # -- Drawing Text -- #
 def text(txt, point: Point, align: Alignment = Alignment.left):
-    dB.text(txt, point, align.name)
+    if isinstance(txt, FormattedString):
+        dB.text(txt.wrapped, point, align.name)
+    else:
+        dB.text(txt, point, align.name)
 
 def textBox(txt, box: Box,
-            align: Alignment = Alignment.left) -> Optional[DrawbotTxt]:
+            align: Alignment = Alignment.left) -> str:
     if isinstance(txt, FormattedString):
-        return dB.textBox(txt.fs, box, align.name)
+        overflow = dB.textBox(txt.wrapped, box, align.name)
     else:
-        return dB.textBox(txt, box, align.name)
+        overflow = dB.textBox(txt, box, align.name)
+    return "" if not overflow else overflow
 
-def textSize(txt: DrawbotTxt,
+def textSize(txt: str,
              align: Optional[Alignment] = None,
              width: Optional[float] = None,
              height: Optional[float] = None):
     dB.textSize(txt, align.name if align else None, width, height)
 
-def textOverflow():
-    pass
+def textOverflow(txt: str, box: Box, align: Alignment = Alignment.left) -> str:
+    if isinstance(txt, FormattedString):
+        overflow = dB.textOverflow(txt.wrapped, box, align.name)
+    else:
+        overflow = dB.textOverflow(txt, box, align.name)
+    return "" if not overflow else overflow
 
-def textBoxBaselines():
-    pass
+def textBoxBaselines(txt: str, bounds: Union[Box, BezierPath], align: Alignment = Alignment.left) -> List[Point]:
+    return [Point(*pp) for pp in dB.textBoxBaselines(txt, bounds, align)]
 
-def textBoxCharacterBounds():
-    pass
+def textBoxCharacterBounds(txt: str, bounds: Union[Box, BezierPath], align: Alignment = Alignment.left) -> List[Box]:
+    return [Box(*pp) for pp in dB.textBoxBaselines(txt, bounds, align)]
 
 def installedFonts(characters: Optional[str] = None) -> List[str]:
     return dB.installedFonts(characters)
@@ -91,8 +95,8 @@ def url(value: str):
 def hyphenation(value: bool):
     dB.hyphenation(value)
 
-def tabs(*tabs: List[Tab]):
-    dB.tabs(*tabs)
+def tabs(*tabs: Tuple[float, Alignment]):
+    dB.tabs(*[(tt, aa.name) for (tt, aa) in tabs])
 
 def language(language: str):
     dB.language(language)
@@ -100,18 +104,21 @@ def language(language: str):
 def listLanguages(self) -> List[str]:
     return dB.listLanguages()
 
-def openTypeFeatures(**features: FeaturesList):
+def openTypeFeatures(**features: bool):
     dB.openTypeFeatures(**features)
 
 def resetFeatures():
     dB.openTypeFeatures(resetFeatures=True)
 
-def listOpenTypeFeatures(fontNameOrPath: Optional[Union[str, Path]] = None):
+def listOpenTypeFeatures(fontNameOrPath: Optional[Union[str, Path]] = None) -> List[str]:
     fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
-    dB.listOpenTypeFeatures(fontNameOrPath)
+    return dB.listOpenTypeFeatures(fontNameOrPath)
 
-def fontVariations(*args, **axes):
-    pass
+def resetVariations():
+    dB.fontVariations(None)
+
+def fontVariations(**axes: float):
+    dB.fontVariations(**axes)
 
 def listFontVariations(fontNameOrPath: Optional[Union[str, Path]] = None) -> List:
     fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
@@ -149,145 +156,148 @@ class FormattedString:
     """
 
     def __init__(self, txt: Union[str, FS] = "", **kwargs):
-        self.fs = dB.FormattedString(txt, **kwargs)
+        self.wrapped = dB.FormattedString(txt, **kwargs)
 
-    def __add__(self, txt: DrawbotTxt):
-        self.fs.append(txt)
+    def __add__(self, txt: str):
+        self.wrapped.append(txt)
 
     def __getitem__(self, index: Union[int, slice]) -> str:
-        return self.fs.__getitem__(index)
+        return self.wrapped.__getitem__(index)
 
     def __len__(self) -> int:
-        return self.fs.__len__()
+        return self.wrapped.__len__()
 
     def __repr__(self) -> str:
-        return f"{self.fs}"
+        return f"{self.wrapped}"
 
     def append(self, txt, **kwargs):
-        self.fs.append(txt, **kwargs)
+        self.wrapped.append(txt, **kwargs)
 
     def font(self, fontNameOrPath: str, fontSize: float = None, fontNumber: int = 0):
-        self.fs.font(fontNameOrPath, fontSize, fontNumber)
+        self.wrapped.font(fontNameOrPath, fontSize, fontNumber)
 
     def fallbackFont(self, fontNameOrPath: str, fontNumber: int = 0):
-        self.fs.fallbackFont(fontNameOrPath, fontNumber)
+        self.wrapped.fallbackFont(fontNameOrPath, fontNumber)
 
     def fontSize(self, fontSize: float):
-        self.fs.fontSize(fontSize)
+        self.wrapped.fontSize(fontSize)
 
     def fill(self, clr: Color):
-        self.fs.fill(*clr)
+        self.wrapped.fill(*clr)
 
     def stroke(self, clr: Color):
-        self.fs.stroke(*clr)
+        self.wrapped.stroke(*clr)
 
     def cmykFill(self, clr: CMYKColor):
-        self.fs.cmykFill(*clr)
+        self.wrapped.cmykFill(*clr)
 
     def cmykStroke(self, clr: CMYKColor):
-        self.fs.cmykStroke(*clr)
+        self.wrapped.cmykStroke(*clr)
 
     def strokeWidth(self, strokeWidth: float):
-        self.fs.strokeWidth(strokeWidth)
+        self.wrapped.strokeWidth(strokeWidth)
 
     def align(self, align: Alignment):
-        self.fs.align(align.name)
+        self.wrapped.align(align.name)
 
     def lineHeight(self, lineHeight: float):
-        self.fs.lineHeight(lineHeight)
+        self.wrapped.lineHeight(lineHeight)
 
     def tracking(self, tracking: float):
-        self.fs.tracking(tracking)
+        self.wrapped.tracking(tracking)
 
     def baselineShift(self, baselineShift: float):
-        self.fs.baselineShift(baselineShift)
+        self.wrapped.baselineShift(baselineShift)
 
     def underline(self, underline: float):
-        self.fs.underline(underline)
+        self.wrapped.underline(underline)
 
     def url(self, url: str):
-        self.fs.url(url)
+        self.wrapped.url(url)
 
-    def openTypeFeatures(self, features: FeaturesList):
-        pass
+    def openTypeFeatures(self, **features: bool):
+        self.wrapped.openTypeFeatures(**features)
 
     def resetFeatures(self):
-        self.fs.openTypeFeatures(resetFeatures=True)
+        self.wrapped.openTypeFeatures(resetFeatures=True)
 
     def listOpenTypeFeatures(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
-        return self.fs.listOpenTypeFeatures(fontNameOrPath, fontNumber)
+        return self.wrapped.listOpenTypeFeatures(fontNameOrPath, fontNumber)
 
-    def fontVariations(self, *args, **axes):
-        pass
+    def resetVariations(self):
+        self.wrapped.fontVariations(resetVariations=True)
+
+    def fontVariations(self, **axes: float):
+        self.wrapped.fontVariations()
 
     def listFontVariations(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
-        return self.fs.listFontVariations(fontNameOrPath, fontNumber)
+        return self.wrapped.listFontVariations(fontNameOrPath, fontNumber)
 
     def listNamedInstances(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
-        return self.fs.listNamedInstances(fontNameOrPath, fontNumber)
+        return self.wrapped.listNamedInstances(fontNameOrPath, fontNumber)
 
-    def tabs(self, tabs: List[Tab]):
-        pass
+    def tabs(self, *tabs: Tuple[float, Alignment]):
+        self.wrapped.tabs(*[(tt, aa.name) for (tt, aa) in tabs])
 
     def indent(self, indent: float):
-        self.fs.indent(indent)
+        self.wrapped.indent(indent)
 
     def tailIndent(self, indent: float):
-        self.fs.tailIndent(indent)
+        self.wrapped.tailIndent(indent)
 
     def firstLineIndent(self, indent: float):
-        self.fs.firstLineIndent(indent)
+        self.wrapped.firstLineIndent(indent)
 
     def paragraphTopSpacing(self, value: float):
-        self.fs.paragraphTopSpacing(value)
+        self.wrapped.paragraphTopSpacing(value)
 
     def paragraphBottomSpacing(self, value: float):
-        self.fs.paragraphBottomSpacing(value)
+        self.wrapped.paragraphBottomSpacing(value)
 
     def language(self, language: str):
-        self.fs.language(language)
+        self.wrapped.language(language)
 
     def size(self) -> NSSize:
-        return self.fs.size()
+        return self.wrapped.size()
 
     def getNSObject(self) -> NSMutableAttributedString:
-        return self.fs.getNSObject()
+        return self.wrapped.getNSObject()
 
     def copy(self): # -> FormattedString:
         return deepcopy(self)
 
     def fontContainsCharacters(self, characters: str) -> bool:
-        return self.fs.fontContainsCharacters(characters)
+        return self.wrapped.fontContainsCharacters(characters)
 
     def fontContainsGlyph(self, glyphName: str) -> bool:
-        return self.fs.fontContainsGlyph(glyphName)
+        return self.wrapped.fontContainsGlyph(glyphName)
 
     def fontFilePath(self) -> str:
-        return self.fs.fontFilePath()
+        return self.wrapped.fontFilePath()
 
     def fontFileFontNumber(self) -> int:
-        return self.fs.fontFileFontNumber()
+        return self.wrapped.fontFileFontNumber()
 
     def listFontGlyphNames(self) -> List[str]:
-        return self.fs.listFontGlyphNames()
+        return self.wrapped.listFontGlyphNames()
 
     def fontAscender(self) -> float:
-        return self.fs.fontAscender()
+        return self.wrapped.fontAscender()
 
     def fontDescender(self) -> float:
-        return self.fs.fontDescender()
+        return self.wrapped.fontDescender()
 
     def fontXHeight(self) -> float:
-        return self.fs.fontXHeight()
+        return self.wrapped.fontXHeight()
 
     def fontCapHeight(self) -> float:
-        return self.fs.fontCapHeight()
+        return self.wrapped.fontCapHeight()
 
     def fontLeading(self) -> float:
-        return self.fs.fontLeading()
+        return self.wrapped.fontLeading()
 
     def fontLineHeight(self) -> float:
-        return self.fs.fontLineHeight()
+        return self.wrapped.fontLineHeight()
 
     def appendGlyph(self, *glyphNames: List[str]):
-        self.fs.appendGlyph(*glyphNames)
+        self.wrapped.appendGlyph(*glyphNames)

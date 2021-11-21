@@ -2,8 +2,8 @@ from noteBot.canvas import newPage, newPageDefault, newDrawing, endDrawing, getS
 from noteBot.colors import fill, stroke, linearGradient, radialGradient, shadow, cmykFill, cmykStroke, cmykLinearGradient, cmykRadialGradient, cmykShadow, blendMode, resetBlendMode, colorSpace, resetColorSpace, listColorSpaces
 from noteBot.images import image, imageSize, imagePixelColor, imageResolution, numberOfPages, ImageObject
 from noteBot.shapes import rect, oval, line, polygon, newPath, moveTo, lineTo, curveTo, qCurveTo, arc, arcTo, closePath, drawPath, clipPath, strokeWidth, miterLimit, lineJoin, lineCap, lineDash, BezierPath
-from noteBot.structures import Alignment, LineCap, LineJoin, Underline, OTFeature, Color, CMYKColor, Box, Point
-from noteBot.text import FormattedString, text, textBox, textSize, textOverflow, textBoxBaselines, textBoxCharacterBounds, installedFonts, installFont, uninstallFont, font, fallbackFont, fontSize, lineHeight, tracking, baselineShift, underline, url, hyphenation, tabs, language, listLanguages, openTypeFeatures, resetFeatures, listOpenTypeFeatures, fontVariations, listFontVariations, listNamedInstances
+from noteBot.structures import Alignment, LineCap, LineJoin, Underline, Color, CMYKColor, Box, Point
+from noteBot.text import FormattedString, text, textBox, textSize, textOverflow, textBoxBaselines, textBoxCharacterBounds, installedFonts, installFont, uninstallFont, font, fallbackFont, fontSize, lineHeight, tracking, baselineShift, underline, url, hyphenation, tabs, language, listLanguages, openTypeFeatures, resetFeatures, listOpenTypeFeatures, fontVariations, resetVariations, listFontVariations, listNamedInstances
 
 __all__ = [
     "newPage",
@@ -85,7 +85,7 @@ __all__ = [
     "LineCap",
     "LineJoin",
     "Underline",
-    "OTFeature",
+    # "OTFeature",
     "Color",
     "CMYKColor",
     "Box",
@@ -116,6 +116,7 @@ __all__ = [
     "resetFeatures",
     "listOpenTypeFeatures",
     "fontVariations",
+    "resetVariations",
     "listFontVariations",
     "listNamedInstances",
 ]

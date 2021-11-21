@@ -76,6 +76,16 @@ def linkDestination(name: str, pt: Point):
 
 
 # -- Transformations -- #
+class SavedStateContextManager:
+
+    def __enter__(self):
+        save()
+        return self
+
+    def __exit__(self, type, value, traceback):
+        restore()
+
+
 def translate(pt: Point):
     dB.translate(x=pt.x, y=pt.y)
 
@@ -92,7 +102,7 @@ def transform(t: Transform):
     dB.transform(*t)
 
 def savedState():
-    dB.savedState()
+    return SavedStateContextManager()
 
 def save():
     dB.save()

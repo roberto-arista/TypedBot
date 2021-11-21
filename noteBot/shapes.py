@@ -7,7 +7,6 @@
 # -- Modules -- #
 from __future__ import annotations
 from typing import Optional, List, Union, Tuple
-from copy import deepcopy
 
 from .structures import Point, Box, Alignment, LineCap, LineJoin
 from .text import FormattedString
@@ -29,7 +28,7 @@ def oval(box: Box):
 def line(pt1: Point, pt2: Point):
     dB.line(pt1, pt2)
 
-def polygon(*points: List[Point], close: bool = True):
+def polygon(*points: Point, close: bool = True):
     dB.polygon(*points, close=close)
 
 
@@ -46,7 +45,7 @@ def lineTo(point: Point):
 def curveTo(point1: Point, point2: Point, point3: Point):
     dB.curveTo(point1, point2, point3)
 
-def qCurveTo(*points: List[Point]):
+def qCurveTo(*points: Point):
     dB.qCurveTo(*points)
 
 def arc(center: Point, radius: float, startAngle: float, endAngle: float, clockwise: bool):
@@ -73,77 +72,126 @@ def miterLimit(value: float):
     dB.miterLimit(value)
 
 def lineJoin(value: LineJoin):
-    dB.lineJoin(value)
+    dB.lineJoin(value.name)
 
 def lineCap(value: LineCap):
-    dB.lineCap(value)
+    dB.lineCap(value.name)
 
-def lineDash(*values: List[float]):
+def lineDash(*values: float):
     dB.lineDash(*values)
 
 
 # -- BezierPath -- #
-class BezierPath(BP):
+class BezierPath:
 
     def __init__(self, path: Optional[BP] = None, glyphSet: Optional[List[str]] = None):
-        super().__init__(path=path, glyphSet=glyphSet)
+        self.wrapped = dB.BezierPath(path, glyphSet)
+
+    def __add__(self, otherPath: BezierPath):
+        new = self.copy()
+        new.appendPath(otherPath)
+        return new
+
+    def __iadd__(self, otherPath: BezierPath):
+        self.appendPath(otherPath)
+        return self
+
+    def __mod__(self, otherPath: BezierPath):
+        return self.difference(otherPath)
+    __rmod__ = __mod__
+
+    def __imod__(self, otherPath: BezierPath):
+        result = self.difference(otherPath)
+        self.setNSBezierPath(result.getNSBezierPath())
+        return self
+
+    def __or__(self, otherPath: BezierPath):
+        return self.union(otherPath)
+    __ror__ = __or__
+
+    def __ior__(self, otherPath: BezierPath):
+        result = self.union(otherPath)
+        self.setNSBezierPath(result.getNSBezierPath())
+        return self
+
+    def __and__(self, otherPath: BezierPath):
+        return self.intersection(otherPath)
+    __rand__ = __and__
+
+    def __iand__(self, otherPath: BezierPath):
+        result = self.intersection(otherPath)
+        self.setNSBezierPath(result.getNSBezierPath())
+        return self
+
+    def __xor__(self, otherPath: BezierPath):
+        return self.xor(otherPath)
+    __rxor__ = __xor__
+
+    def __ixor__(self, otherPath: BezierPath):
+        result = self.xor(otherPath)
+        self.setNSBezierPath(result.getNSBezierPath())
+        return self
 
     def moveTo(self, point: Point):
-        super().moveTo(point)
+        self.wrapped.moveTo(point)
 
     def lineTo(self, point: Point):
-        super().lineTo(point)
+        self.wrapped.lineTo(point)
 
     def curveTo(self, *points: List[Point]):
-        super().curveTo(*points)
+        self.wrapped.curveTo(*points)
 
-    def qCurveTo(self, *points: List[Point]):
-        super().qCurveTo(*points)
+    def qCurveTo(self, *points: Point):
+        self.wrapped.qCurveTo(*points)
 
     def closePath(self):
-        super().closePath()
+        self.wrapped.closePath()
 
     def beginPath(self, identifier: Optional[str] = None):
-        super().beginPath()
+        self.wrapped.beginPath()
 
-    def addPoint(point, segmentType=None, smooth=False, name=None, identifier=None, **kwargs):
-        super().addPoint()
+    def addPoint(self, point, segmentType=None, smooth=False, name=None, identifier=None, **kwargs):
+        self.wrapped.addPoint()
 
     def endPath(self):
-        super().endPath()
+        self.wrapped.endPath()
 
     def addComponent(self, glyphName: str, transformation: Transform):
-        super().addComponent(glyphName, transformation)
+        self.wrapped.addComponent(glyphName, transformation)
 
     def drawToPen(self, pen):   # here a swift protocol would be great
-        super().drawToPen(pen)
+        self.wrapped.drawToPen(pen)
 
     def drawToPointPen(self, pointPen):   # idem
-        super().drawToPointPen(pointPen)
+        self.wrapped.drawToPointPen(pointPen)
 
-    def arc(center, radius, startAngle, endAngle, clockwise):
-        super().arc(center, radius, startAngle, endAngle, clockwise)
+    def arc(self, center, radius, startAngle, endAngle, clockwise):
+        self.wrapped.arc(center, radius, startAngle, endAngle, clockwise)
 
     def arcTo(self, point1: Point, point2: Point, radius: float):
-        super().arcTo(point1, point2, radius)
+        self.wrapped.arcTo(point1, point2, radius)
 
     def rect(self, box: Box):
-        super().rect(*box)
+        self.wrapped.rect(*box)
 
     def oval(self, box: Box):
-        super().oval(*box)
+        self.wrapped.oval(*box)
 
     def line(self, point1: Point, point2: Point):
-        super().line(point1, point2)
+        self.wrapped.line(point1, point2)
 
     def polygon(self, *points: List[Point], close: bool = False):
-        super().polygon(*points, close=close)
+        self.wrapped.polygon(*points, close=close)
 
     def text(self, txt: Union[FormattedString, str],
-                   offset: Point,
+                   offset: Point = Point(0, 0),
                    font: Optional[str] = 'LucidaGrande',
-                   fontSize: float = 10):
-        super().text(txt, offset, font, fontSize)
+                   fontSize: float = 10,
+                   align=Alignment.left):
+        if isinstance(txt, FormattedString):
+            self.wrapped.text(txt.wrapped, offset=offset, font=font, fontSize=fontSize, align=align.name)
+        else:
+            self.wrapped.text(txt, offset=offset, font=font, fontSize=fontSize, align=align.name)
 
     def textBox(self, txt: Union[FormattedString, str],
                       box: Box,
@@ -151,100 +199,103 @@ class BezierPath(BP):
                       fontSize: float = 10,
                       align: Alignment = Alignment.left,
                       hyphenation: bool = False):
-        super().textBox(txt, box, font, fontSize, f'{align}', hyphenation)
+        self.wrapped.textBox(txt, box, font, fontSize, f'{align}', hyphenation)
 
     def getNSBezierPath(self) -> NSBezierPath:
-        return super().getNSBezierPath()
+        return self.wrapped.getNSBezierPath()
 
     def setNSBezierPath(self, path: NSBezierPath):
-        super().setNSBezierPath(path)
+        self.wrapped.setNSBezierPath(path)
 
-    def pointInside(self, point: Point):
-        super().pointInside(xy=point)
+    def pointInside(self, point: Point) -> bool:
+        return self.wrapped.pointInside(point)
 
     def bounds(self) -> Box:
-        x, y, wdt, hgt = super().bounds()
+        x, y, wdt, hgt = self.wrapped.bounds()
         return Box(x=x, y=y, wdt=wdt, hgt=hgt)
 
     def controlPointBounds(self) -> Box:
-        x, y, wdt, hgt = super().controlPointBounds()
+        x, y, wdt, hgt = self.wrapped.controlPointBounds()
         return Box(x=x, y=y, wdt=wdt, hgt=hgt)
 
     def optimizePath(self):
-        super().optimizePath()
+        self.wrapped.optimizePath()
 
     def copy(self) -> BezierPath:
-        return deepcopy(self)
+        new = BezierPath()
+        new.wrapped = self.wrapped.copy()
+        return new
 
     def reverse(self):
-        super().reverse()
+        self.wrapped.reverse()
 
     def appendPath(self, otherPath: BezierPath):
-        super().appendPath(otherPath)
+        self.wrapped.appendPath(otherPath)
 
     def translate(self, point: Point):
-        super().translate(*point)
+        self.wrapped.translate(*point)
 
     def rotate(self, angle: float, center: Point = Point(0, 0)):
-        super().rotate(angle, center)
+        self.wrapped.rotate(angle, center)
 
-    def scale(self, center: Point = Point(0, 0)):
-        super().scale()
+    def scale(self, x: float, y: float, center: Point = Point(0, 0)):
+        self.wrapped.scale(x, y)
 
     def skew(self, angle1: float, angle2: float = 0, center: Point = Point(0, 0)):
-        super().skew(angle1, angle2, center)
+        self.wrapped.skew(angle1, angle2, center)
 
     def transform(self, matrix: Transform, center: Point = Point(0, 0)):
-        super().transform(matrix, center)
-
-    def union(other: BezierPath):
-        super().union(other.super())
+        self.wrapped.transform(matrix, center)
 
     def removeOverlap(self):
-        super().removeOverlap()
+        self.wrapped.removeOverlap()
 
-    def difference(other: BezierPath):
-        super().difference(other.super())
+    # boolean operations
+    def union(self, other: BezierPath):
+        self.wrapped.union(other.wrapped)
 
-    def intersection(other: BezierPath):
-        super().intersection(other.super())
+    def difference(self, other: BezierPath):
+        self.wrapped.difference(other.wrapped)
 
-    def xor(other: BezierPath):
-        super().xor(other.super())
+    def intersection(self, other: BezierPath):
+        self.wrapped.intersection(other.wrapped)
+
+    def xor(self, other: BezierPath):
+        self.wrapped.xor(other.wrapped)
 
     def intersectionPoints(self, other: Optional[BezierPath]):
-        super().intersectionPoints(other.super() if other else None)
+        self.wrapped.intersectionPoints(other.wrapped if other else None)
 
     def expandStroke(self, width: float,
                            lineCap: LineCap = LineCap.round,
                            lineJoin: LineJoin = LineJoin.round,
                            miterLimit: float = 10):
-        super().expandStroke()
+        self.wrapped.expandStroke(width, lineCap.name, lineJoin.name, miterLimit)
 
     @property
     def points(self) -> Tuple[Point, ...]:
-        return tuple(Point(*pt) for pt in super().points)
+        return tuple(Point(*pt) for pt in self.wrapped.points)
 
     @property
     def onCurvePoints(self) -> Tuple[Point, ...]:
-        return tuple(Point(*pt) for pt in super().onCurvePoints)
+        return tuple(Point(*pt) for pt in self.wrapped.onCurvePoints)
 
     @property
     def offCurvePoints(self) -> Tuple[Point, ...]:
-        return tuple(Point(*pt) for pt in super().offCurvePoints)
+        return tuple(Point(*pt) for pt in self.wrapped.offCurvePoints)
 
     @property
     def contours(self) -> Tuple[BC]:
-        return super().contours
+        return self.wrapped.contours
 
     @property
     def svgClass(self) -> str:
-        return super().svgClass
+        return self.wrapped.svgClass
 
     @property
     def svgID(self) -> str:
-        return super().svgID
+        return self.wrapped.svgID
 
     @property
     def svgLink(self) -> str:
-        return super().svgLink
+        return self.wrapped.svgLink
