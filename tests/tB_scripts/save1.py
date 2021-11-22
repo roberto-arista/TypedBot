@@ -1,0 +1,15 @@
+import typedBot as tB
+tB.newPage(300, 300)
+tB.save()
+tB.fill(tB.Color(1, 0, 0))
+tB.translate(tB.Point(150, 150))
+
+rectBox = tB.Box(0, 0, 100, 100)
+tB.rect(rectBox)
+tB.save()
+tB.rotate(45)
+tB.fill(tB.Color(0, 1, 0))
+tB.rect(rectBox)
+tB.restore()
+tB.restore()
+tB.rect(rectBox)

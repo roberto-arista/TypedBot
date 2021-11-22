@@ -6,7 +6,7 @@
 
 # -- Modules -- #
 import drawBot as dB
-import noteBot as nB
+import typedBot as tB
 
 from pytest import param, mark
 from pathlib import Path
@@ -60,7 +60,7 @@ data = [
 
 # -- Helpers -- #
 def runScriptAndSaveImage(path: Path, annotated: bool = False):
-    mod = nB if annotated else dB
+    mod = tB if annotated else dB
     mod.newDrawing()
     import_module(f"{path.parent.name}.{path.stem}")
     if annotated:
@@ -82,10 +82,10 @@ def compareImages(path1: Path, path2: Path) -> bool:
 # -- Tests -- #
 @mark.parametrize("name", data)
 def test_comparison(name):
-    nbScript = TESTS_FOLDER / 'nB_scripts' / name
+    tBScript = TESTS_FOLDER / 'tB_scripts' / name
     dBScript = TESTS_FOLDER / 'dB_scripts' / name
-    assert nbScript.exists()
+    assert tBScript.exists()
     assert dBScript.exists()
-    tB_path = runScriptAndSaveImage(path=nbScript, annotated=True)
+    tB_path = runScriptAndSaveImage(path=tBScript, annotated=True)
     dB_path = runScriptAndSaveImage(path=dBScript)
     assert compareImages(tB_path, dB_path)

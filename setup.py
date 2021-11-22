@@ -1,12 +1,12 @@
 from distutils.core import setup
 
 setup(
-    name='NoteBot',
+    name='TypedBot',
     author='Roberto Arista',
     author_email="hello@robertoarista.it",
     version='0.1',
-    packages=['noteBot'],
-    package_data={"noteBot": ["py.typed"]},
+    packages=['typedBot'],
+    package_data={"typedBot": ["py.typed"]},
     include_package_data=True,
     license=open('LICENSE').read(),
     long_description=open('README.md').read(),

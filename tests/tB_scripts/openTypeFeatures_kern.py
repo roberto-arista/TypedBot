@@ -1,0 +1,15 @@
+import typedBot as tB
+tB.newPage(130, 130)
+tB.font("Times")
+tB.text("ToTAVAT.", (10, 10))
+tB.openTypeFeatures(kern=False)
+tB.text("ToTAVAT.", (10, 30))
+tB.openTypeFeatures(kern=True)
+tB.text("ToTAVAT.", (10, 50))
+# add tracking
+tB.tracking(10)
+tB.text("ToTAVAT.", (10, 70))
+tB.openTypeFeatures(kern=False)
+tB.text("ToTAVAT.", (10, 90))
+tB.openTypeFeatures(kern=True)
+tB.text("ToTAVAT.", (10, 110))
