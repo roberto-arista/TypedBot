@@ -8,24 +8,69 @@
 import drawBot as dB
 import noteBot as nB
 
+from pytest import param, mark
 from pathlib import Path
 from importlib import import_module
 from PIL import Image, ImageChops
 
 
+# -- Test Parameters -- #
+TESTS_FOLDER = Path('tests')
+
+data = [
+    param("centeredTransformBezierPath.py"),
+    param("booleanOperations.py"),
+    param("booleanOperations2.py"),
+    param("centeredTransform.py"),
+    param("cmykFill.py"),
+    param("cmykLinearGradient.py"),
+    param("cmykRadialGradient.py"),
+    param("fill.py"),
+    param("fontAttributes.py", marks=mark.xfail),
+    param("fontPath.py"),
+    param("fontVariations.py"),
+    param("fontVariations2.py"),
+    param("image.py", marks=mark.xfail),
+    param("image2.py", marks=mark.xfail),
+    param("image3.py", marks=mark.xfail),
+    param("image4.py", marks=mark.xfail),
+    param("imageHTTP.py", marks=mark.xfail),
+    param("imagePixelColor.py", marks=mark.xfail),
+    param("line.py"),
+    param("linearGradient.py"),
+    param("openTypeFeatures_kern.py"),
+    param("openTypeFeatures.py"),
+    param("openTypeFeatures2.py"),
+    param("oval.py"),
+    param("path.py"),
+    param("pathWithCounter.py"),
+    param("polygon.py"),
+    param("radialGradient.py"),
+    param("rect.py"),
+    param("removeOverlap.py"),
+    param("save.py"),
+    param("save1.py"),
+    param("savedState.py"),
+    param("savedState1.py"),
+    param("shapes.py"),
+    param("text.py"),
+    param("text2.py"),
+    param("traceback.py", marks=mark.xfail),
+]
+
 # -- Helpers -- #
 def runScriptAndSaveImage(path: Path, annotated: bool = False):
     mod = nB if annotated else dB
     mod.newDrawing()
-    print(f"RUNNING: {path}")
-    import_module(f'{path.parent}.{path.stem}')
-
+    import_module(f"{path.parent.name}.{path.stem}")
     if annotated:
-        mod.savePNG(path.with_suffix('.png'))
+        imgPath = TESTS_FOLDER / 'images' / f'{path.stem}_tB.png'
+        mod.savePNG(imgPath)
     else:
-        mod.saveImage(path.with_suffix('.png'))
-
+        imgPath = TESTS_FOLDER / 'images' / f'{path.stem}_dB.png'
+        mod.saveImage(imgPath)
     mod.endDrawing()
+    return imgPath
 
 def compareImages(path1: Path, path2: Path) -> bool:
     im1 = Image.open(path1)
@@ -35,22 +80,12 @@ def compareImages(path1: Path, path2: Path) -> bool:
 
 
 # -- Tests -- #
-def runTests():
-    for nbScript, dBScript in zip(noteBotScriptsFolder.glob('*.py'), drawBotScriptsFolder.glob('*.py')):
-        assert nbScript.name == dBScript.name, 'mismatch in the scripts folders'
-        if nbScript.name not in skip:
-            runScriptAndSaveImage(path=nbScript, annotated=True)
-            runScriptAndSaveImage(path=dBScript)
-            assert compareImages(nbScript.with_suffix('.png'), dBScript.with_suffix('.png'))
-
-
-# -- Variables -- #
-noteBotScriptsFolder = Path('nB_scripts')
-drawBotScriptsFolder = Path('dB_scripts')
-
-skip = ['imageHTTP.py', 'fontAttributes.py', 'imagePixelColor.py',
-        'image.py', 'image2.py', 'image3.py', 'image4.py', 'traceback.py']
-
-# -- Instructions -- #
-if __name__ == '__main__':
-    runTests()
+@mark.parametrize("name", data)
+def test_comparison(name):
+    nbScript = TESTS_FOLDER / 'nB_scripts' / name
+    dBScript = TESTS_FOLDER / 'dB_scripts' / name
+    assert nbScript.exists()
+    assert dBScript.exists()
+    tB_path = runScriptAndSaveImage(path=nbScript, annotated=True)
+    dB_path = runScriptAndSaveImage(path=dBScript)
+    assert compareImages(tB_path, dB_path)
