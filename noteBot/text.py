@@ -15,7 +15,7 @@ from AppKit import NSMutableAttributedString, NSSize
 
 from .structures import Color, CMYKColor, Alignment
 from .structures import Underline, Point, Box
-from .shapes import BezierPath
+# from .shapes import BezierPath
 
 
 # -- Drawing Text -- #
@@ -46,10 +46,12 @@ def textOverflow(txt: str, box: Box, align: Alignment = Alignment.left) -> str:
         overflow = dB.textOverflow(txt, box, align.name)
     return "" if not overflow else overflow
 
-def textBoxBaselines(txt: str, bounds: Union[Box, BezierPath], align: Alignment = Alignment.left) -> List[Point]:
+# Union[Box, BezierPath]
+def textBoxBaselines(txt: str, bounds: Union[Box], align: Alignment = Alignment.left) -> List[Point]:
     return [Point(*pp) for pp in dB.textBoxBaselines(txt, bounds, align)]
 
-def textBoxCharacterBounds(txt: str, bounds: Union[Box, BezierPath], align: Alignment = Alignment.left) -> List[Box]:
+# Union[Box, BezierPath]
+def textBoxCharacterBounds(txt: str, bounds: Union[Box], align: Alignment = Alignment.left) -> List[Box]:
     return [Box(*pp) for pp in dB.textBoxBaselines(txt, bounds, align)]
 
 def installedFonts(characters: Optional[str] = None) -> List[str]:
