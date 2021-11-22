@@ -1,5 +1,5 @@
 # TypedBot
-An annotated wrapper of [DrawBot](https://www.drawbot.com)
+A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 ## FAQs
 
@@ -7,7 +7,7 @@ An annotated wrapper of [DrawBot](https://www.drawbot.com)
 
 + Wait, what? Type Annotations? Isn't Python dynamically typed?
 
-+ Why should someone use type annotations? It's extra code and I am lazy.
++ Why should someone use type annotations? It is extra code and I am lazy.
 
 + That's an interesting topic, I want to know more.
 
@@ -18,25 +18,25 @@ An annotated wrapper of [DrawBot](https://www.drawbot.com)
 
     I also found these talks useful:
     - [Gradual Typing in Practice](https://www.youtube.com/watch?v=Lj_9TyT3V98)
+    - [Bernat Gabor - Type hinting (and mypy) - PyCon 2019](https://www.youtube.com/watch?v=hTrjTAPnA_k)
 
 + If type annotations are not checked at runtime, how do I know if I am doing something wrong?
 
-    You need to use a static type checker, like [mypy](http://mypy-lang.org) or [pyre](https://pyre-check.org). You could tie the static type checker to your favourite code editor. I use SublimeText with the SublimeLinter plugin. You can install mypy as [extension](https://github.com/fredcallaway/SublimeLinter-contrib-mypy) for the SublimeLinter plugin.
+    You need to use a static type checker, like [mypy](http://mypy-lang.org) or [pyre](https://pyre-check.org). You could tie the static type checker to your favourite code editor linter functionality. I use [SublimeText](https://www.sublimetext.com) with the [SublimeLinter](http://www.sublimelinter.com/en/stable/) plugin. You can install mypy as [extension](https://github.com/fredcallaway/SublimeLinter-contrib-mypy) for the SublimeLinter plugin.
 
 + Why a wrapper? Couldn't you just insert the annotations inside the DrawBot API?
 
-    This would be possible, but consider that the DrawBot API makes an extensive use of duck typing in the way it is structured. For example, when you pass a coordinate to a function like [`text(txt, (x, y), align=None)`](https://www.drawbot.com/content/text/drawingText.html?highlight=text#drawBot.text), DrawBot does not really care if it is a tuple, a list, a namedtuple, a class acting like a sequence (like a custom Point/Vector class). DrawBot says «Two numbers? Cool, I don't need anything more, let's draw». That's very cool and flexible, but flexibility some times can be problematic in large projects.
-    Annotating this kind of API might be difficult and lead to ugly code. And I don't really want my contribution to DrawBot to be remembered for being ugly 🥲.
+    This would be possible, but consider that the DrawBot API makes an extensive use of duck typing in the way it structures its API. For example, when you pass a coordinate to a function like [`text(txt, (x, y), align=None)`](https://www.drawbot.com/content/text/drawingText.html?highlight=text#drawBot.text), DrawBot does not really care if you pass a `tuple`, a `list`, a `namedtuple`, a class acting like a sequence (like a custom `Vector` class). DrawBot says «Two numbers? Cool, I don't need anything more, let's draw». That's very cool and flexible, but flexibility sometimes can lead to bugs. Annotating this kind of API might be difficult and it can generate ugly code. And I don't really want my contribution to DrawBot to be remembered for being ugly 🥲.
 
-+ Wait, you said Duck Typing? Like the animal?
-    
++ Wait, did you say Duck Typing? Like the animal?
+
     "If it walks like a duck and it quacks like a duck, then it must be a duck" see [1](https://en.wikipedia.org/wiki/Duck_typing) and [2](https://i.stack.imgur.com/DNeRD.jpg)
 
 + Ok, sold. I want to try it. How can I install it?
 
     `pip install git+https://github.com/roberto-arista/TypedBot`
 
-    Be aware, it's the first package I release, so I probably did something wrong in setup.py or similar. Open an issue is something goes wrong and I'll try to figure out a solution.
+    Be aware, it's the first package I release, so I probably did something wrong in `setup.py` or similar. Open an issue if something goes wrong and I'll try to figure out a solution.
 
 + Wait, is this stable? Can I use it in production?
 
@@ -59,7 +59,7 @@ An annotated wrapper of [DrawBot](https://www.drawbot.com)
     That's great! Right now I see three areas where I could need some help:
     + Some tests are still failing. I'll work on these, but if you have time to figure out what's wrong, be my guest!
     + It would be nice to have some docs online. I don't know what these docs should show, probably each method should have a link to the drawBot's original version and the annotations.
-    + Part of the API is not still annotated. For example the `imageObject`. It has a large API (about 100 methods?) and I seldom use it. So, it's not my priority to annotate it.
+    + Part of the API is not annotated yet. For example the `imageObject`. It has a large API (about 100 methods?) and I seldom use it. So, it's not my priority to annotate it.
 
     If you want to contribute, I suggest to:
     + fork the repo
