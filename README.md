@@ -7,11 +7,19 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
     During the last year, I started to study and use Swift. It's not so hard to learn if you come from Python, the syntax is quite similar, but you have to get used to handling types. That's a bit annoying at the beginning, but it has its own advantages. In a way, it made me realize that I often write crappy Python code (unwrapping optionals? what's that?).
 
-    Handling types is frustrating because you get all these annoying error messages from your IDE. It slows you down and it forces you to cast ints as floats for a `sin()` function and other things only meaningful to Computer Science people. At the same time, all these annoying messages risk becoming errors at runtime. And it sucks if you are going to distribute the code to other users. Bugs mean extra complaints and less confidence. Bad for users and developers.
+    Handling types is frustrating because you get all these annoying error messages from your IDE, like "this function might return a None value, are you prepared for that?". It slows you down and it forces you to cast ints as floats for a `sin()` function and other things only meaningful to Computer Science people. At the same time, all these annoying messages risk becoming errors at runtime. And it sucks if you are going to distribute the code to other users. Bugs mean extra complaints and less confidence. Bad for users and developers.
 
-    How can I get some extra confidence in writing my code while using Python? I like Swift, but Python is very useful, especially for font development work. Maybe I can get a similar experience to writing Swift by adding type annotations to Python code. But, you can't check annotations where they do not exist. And most of the packages I use for my own work do not have annotations. So, I screamed to the sky: «I will add annotations to DrawBot!»
+    How can I get some extra confidence in writing my code while using Python? I like Swift, but Python is useful, especially for font development work. Maybe I can get a similar experience to writing Swift by adding type annotations to Python code. But, you can't check annotations where they do not exist. And most of the packages I use for my own work do not have annotations. So, I screamed to the sky: «I will add annotations to DrawBot!»
 
-    Well, that's not so easy. Let's start with the wrapper, then we'll see.
+    Well, that's not so easy. Let's start with a wrapper around DrawBot, then we'll see.
+    
++ What is DrawBot?
+
+    I usually present DrawBot to non-type people in this way: "It is a cousin of Processing, but: (1) you write Python code, (2) it handles text and vectors super well with powerful APIs like `BezierPath` and `FormattedString`, (3) it's not meant for real-time interaction". Quoting from the DrawBot home page:
+    
+    > DrawBot is a powerful, free application for macOS that invites you to write simple python scripts to generate two-dimensional graphics. 
+
+    DrawBot is © by Erik van Blokland, Just van Rossum, Frederik Berlaen
 
 + Why a wrapper?
 
