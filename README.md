@@ -28,7 +28,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
     + [PEP 526 -- Syntax for Variable Annotations](https://www.python.org/dev/peps/pep-0526/)
     + [PEP 3107 -- Function Annotations](https://www.python.org/dev/peps/pep-3107/)
 
-    I also found these talks useful:
+    I have also found these talks useful:
     - [Gradual Typing in Practice](https://www.youtube.com/watch?v=Lj_9TyT3V98)
     - [Bernat Gabor - Type hinting (and mypy) - PyCon 2019](https://www.youtube.com/watch?v=hTrjTAPnA_k)
 
@@ -53,9 +53,6 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 + Ok, so how do I know what differs between the two APIs?
 
     The source code of TypedBot and the DrawBot docs are the best references.
-    These are the principles I followed when changing the API
-    + Use `Optional` as little as possible. DrawBot makes large use of `None` in function signatures. For example when you need to set a transparent color with `fill`, `stroke`, and so on. So, instead of `fill(None)` in TypedBot you should set a transparent color, like `fill(Color(r=0, g=0, b=0, a=0))`
-    + prefer dataclasses and enums to 
 
 + This project is cool, I want to help you. How can I contribute to it?
 
