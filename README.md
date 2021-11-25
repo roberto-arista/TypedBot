@@ -12,7 +12,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
     How can I get some extra confidence in writing my code while using Python? I like Swift, but Python is useful, especially for font development work. Maybe I can get a similar experience to writing Swift by adding type annotations to Python code. But, you can't check annotations where they do not exist. And most of the packages I use for my own work do not have annotations. So, I screamed to the sky: «I will add annotations to DrawBot!»
 
     Well, that's not so easy. Let's start with a wrapper around DrawBot, then we'll see.
-    
+
 + What is DrawBot?
 
     I usually present DrawBot to non-type people in this way: "It is a cousin of Processing, but: (1) you write Python code, (2) it handles text and vectors super well with powerful APIs like `BezierPath` and `FormattedString`, (3) it's not meant for real-time interaction". Quoting from the DrawBot home page:
@@ -42,7 +42,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + If type annotations are not checked at runtime, how do I know if I am doing something wrong?
 
-    You need to use a static type checker, like [mypy](http://mypy-lang.org) or [pyre](https://pyre-check.org). You could tie the static type checker to your favorite code editor linter functionality. I use [SublimeText](https://www.sublimetext.com) with the [SublimeLinter](http://www.sublimelinter.com/en/stable/) plugin. You can install mypy as [extension](https://github.com/fredcallaway/SublimeLinter-contrib-mypy) for the SublimeLinter plugin. In my experience, in a similar way to unit tests, type annotations are extremely helpful during refactoring.
+    You need to use a static type checker, like [mypy](http://mypy-lang.org) or [pyre](https://pyre-check.org). You could tie the static type checker to your favorite code editor linter functionality. I use [SublimeText](https://www.sublimetext.com) with the [SublimeLinter](http://www.sublimelinter.com/en/stable/) plugin. You can install mypy as [extension](https://github.com/fredcallaway/SublimeLinter-contrib-mypy) for the SublimeLinter plugin. In my experience, in a similar way to unit tests, type annotations are extremely helpful during the refactoring process.
 
 + Ok, sold. I want to try it. How can I install it?
 
@@ -56,11 +56,37 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + Is the TypedBot API equivalent to the DrawBot API?
 
-    Not completely. Type annotations syntax allows to annotate functions and methods of any kind in Python, but the result is not always great code. Considering that this wrapper is separate from drawBot and that it does not break any existing functionality, I decided to change a few things to make the source code easier and cleaner.
+    Not completely. Type annotations syntax allows to annotate functions and methods of any kind in Python, but the result is not always great code. Considering that this wrapper is separate from DrawBot and that it does not break any existing functionality, I decided to take some liberty.
 
 + Ok, so how do I know what differs between the two APIs?
 
-    The source code of TypedBot and the DrawBot docs are the best references.
+    The source code of TypedBot and the DrawBot docs are the best references. Here are some principles I followed (hopefully consistenly across the API):
+    + I tried to avoid optionals as much as possible. In other words, I tried to avoid to let parameters accept `None` as a value. I know that `fill(None)` is an idiomatic way of saying `fill(0, 0, 0, 0)`, but in this framework I'd rather be strict and avoid `None`
+    + In the DrawBot API functions often accept sequences of numbers for colors, points or boxes. For example:
+        ```
+        fill(1, 0, 0)
+        text('hello', (100, 100))
+        ```
+        Annotating this function would result in something like:
+        ```
+        def fill(clr: Optional[Tuple[float, float, float]]):
+            pass
+
+        def text(txt: str, pt: Tuple[float, float]):
+            pass
+        ```
+        Which is not optimal in my opinion. So I decided to create a few dataclasses like `Color`, `CMYKColor`, `Box` and `Point`. So the annotations become:
+        ```
+        def fill(clr: Color):
+            pass
+
+        def text(txt: str, pt: Point):
+            pass
+        ```
+    + I decided to extract some functionalities from `newPage`, `saveImage`, `fontVariations` and `openTypeFeatures` and to direct it to other functions.
+        + `newPage` accepts two floats for width and height and `newPageDefault` accepts a string value for a default page size, like "A4". Making a Union[float, str] for the first argument of the function did not make much sense IMHO
+        + `saveImage` is a very dense and cool method in DrawBot, but it is very difficult to annotate in a clear way! It has a ton of default keywork arguments, and I decided to make a clone for each format (png, jpg, pdf...)
+        + `fontVariations` and `openTypeFeatures` mix \*args and \*\*kwargs in order to be able to have `resetVariations` or `resetFeatures` boolean argument. It felt natural to extract this functionality into a separate functions `resetVariations()` and `resetFeatures()`
 
 + This project is cool, I want to help you. How can I contribute to it?
 
@@ -77,6 +103,12 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
     cd path/to/cloned/repo
     pip install -e .
     ```
+    + make a pull request!
+
++ I like the general sense of TypedBot, but I do not like SOME features
+
+    TypedBot is also an opportunity to sparkle some (healthy I hope) discussion in the type-tech-tool world about annotations. Do we want to use them? Should we make an effort to annotate existing code bases? Maybe not, I am not sure. So, if you do not agree with my choices, that's fine. Open an issue, maybe submit a pull request with your ideas, and let's discuss!
+    I also invite you to try it in your projects, if you think the wrapping should happen in a different way, you don't need to wrap the entire API, just work on the functions you need and give it a spin!
 
 + What about the license?
 
