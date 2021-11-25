@@ -19,7 +19,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
     
     > DrawBot is a powerful, free application for macOS that invites you to write simple python scripts to generate two-dimensional graphics. 
 
-    DrawBot is © by Erik van Blokland, Just van Rossum, Frederik Berlaen
+    DrawBot is © by [Erik van Blokland](https://letterror.com), [Just van Rossum](https://twitter.com/justvanrossum), [Frederik Berlaen](https://typemytype.com)
 
 + Why a wrapper?
 
