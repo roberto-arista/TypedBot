@@ -113,3 +113,6 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 + What about the license?
 
     TypedBot has the same license as DrawBot, so you can use it wherever you use DrawBot
+
++ Extra notes
+    I started to develop this project during the Winter 1 2021 batch at [Recurse Center](https://www.recurse.com). Such a cool place!
