@@ -42,7 +42,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + If type annotations are not checked at runtime, how do I know if I am doing something wrong?
 
-    You need to use a static type checker, like [mypy](http://mypy-lang.org) or [pyre](https://pyre-check.org). You could tie the static type checker to your favorite code editor linter functionality. I use [SublimeText](https://www.sublimetext.com) with the [SublimeLinter](http://www.sublimelinter.com/en/stable/) plugin. You can install mypy as [extension](https://github.com/fredcallaway/SublimeLinter-contrib-mypy) for the SublimeLinter plugin.
+    You need to use a static type checker, like [mypy](http://mypy-lang.org) or [pyre](https://pyre-check.org). You could tie the static type checker to your favorite code editor linter functionality. I use [SublimeText](https://www.sublimetext.com) with the [SublimeLinter](http://www.sublimelinter.com/en/stable/) plugin. You can install mypy as [extension](https://github.com/fredcallaway/SublimeLinter-contrib-mypy) for the SublimeLinter plugin. In my experience, in a similar way to unit tests, type annotations are extremely helpful during refactoring.
 
 + Ok, sold. I want to try it. How can I install it?
 
