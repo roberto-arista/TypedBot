@@ -5,11 +5,11 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + First of all, why? Don't we already have DrawBot?
 
-    During the last year, I started to study and use Swift. It's not so hard to learn if you come from Python, the syntax is quite similar, but you have to get used to handling types. That's a bit annoying at the beginning, but it has its own advantages. In a way, it made me realize that I often write crappy Python code (unwrapping optionals? what's that?).
+    During the last year, I started to study and use Swift. It's not so hard to learn if you come from Python, the syntax is quite similar, but you have to get used to handling types. That's a bit annoying at the beginning, but it has its advantages. In a way, it made me realize that I often write crappy Python code (unwrapping optionals? what's that?).
 
     Handling types is frustrating because you get all these annoying error messages from your IDE, like "this function might return a `None` value, are you prepared for that?". It slows you down and it forces you to cast ints as floats for a `sin()` function and other things only meaningful to Computer Science people. At the same time, all these annoying messages risk becoming errors at runtime. And it sucks if you are going to distribute the code to other users. Bugs mean extra complaints and less confidence. Bad for users and developers.
 
-    How can I get some extra confidence in writing my code while using Python? I like Swift, but Python is useful, especially for font development work. Maybe I can get a similar experience to writing Swift by adding type annotations to Python code. But, you can't check annotations where they do not exist. And most of the packages I use for my own work do not have annotations. So, I screamed to the sky: «I will add annotations to DrawBot!»
+    How can I get some extra confidence in writing my code while using Python? I like Swift, but Python is useful, especially for font development work. Maybe I can get a similar experience to writing Swift by adding type annotations to Python code. But, you can't check annotations where they do not exist. And most of the packages I use for my work do not have annotations. So, I screamed to the sky: «I will add annotations to DrawBot!»
 
     Well, that's not so easy. Let's start with a wrapper around DrawBot, then we'll see.
 
@@ -23,7 +23,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + Why a wrapper?
 
-    Consider that the DrawBot API makes extensive use of duck typing in the way it structures its API. For example, when you pass a coordinate to a function like [`text(txt, (x, y), align=None)`](https://www.drawbot.com/content/text/drawingText.html?highlight=text#drawBot.text), DrawBot does not really care if you pass a `tuple`, a `list`, a `namedtuple`, a class acting like a sequence (like a custom `Vector` class). DrawBot says «Two numbers? Cool, I need nothing more, let's draw». That's very cool and flexible, but flexibility sometimes can lead to bugs. Annotating this kind of API might be difficult and it can generate ugly code. And I don't really want my contribution to DrawBot to be remembered for being ugly 🥲.
+    Consider that the DrawBot API makes extensive use of duck typing in the way it structures its API. For example, when you pass a coordinate to a function like [`text(txt, (x, y), align=None)`](https://www.drawbot.com/content/text/drawingText.html?highlight=text#drawBot.text), DrawBot does not care if you pass a `tuple`, a `list`, a `namedtuple`, a class acting like a sequence (like a custom `Vector` class). DrawBot says «Two numbers? Cool, I need nothing more, let's draw». That's very cool and flexible, but flexibility sometimes can lead to bugs. Annotating this kind of API might be difficult and it can generate ugly code. And I don't want my contribution to DrawBot to be remembered for being ugly 🥲.
 
 + Wait, did you say Duck Typing? Like the animal?
 
@@ -52,7 +52,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + Wait, is this stable? Can I use it in production?
 
-    Yes, no, almost. DrawBot is stable and well tested. TypedBot, not yet. Some tests are still failing, and part of the DrawBot API is not annotated yet (see imageObject). I am using this module in a couple of projects and the experience acquired will probably push me to adjust or change some things. IMHO you can use it, but you need to be a bit flexible
+    Yes, no, almost. DrawBot is stable and well tested. TypedBot, not yet. Some tests are still failing, and part of the DrawBot API is not annotated yet (see `imageObject`). I am using this module in a couple of projects and the experience acquired will probably push me to adjust or change some things. IMHO you can use it, but you need to be a bit flexible
 
 + Is the TypedBot API equivalent to the DrawBot API?
 
@@ -60,9 +60,9 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + Ok, so how do I know what differs between the two APIs?
 
-    The source code of TypedBot and the DrawBot docs are the best references. Here are some principles I followed (hopefully consistenly across the API):
-    + I tried to avoid optionals as much as possible. In other words, I tried to avoid to let parameters accept `None` as a value. I know that `fill(None)` is an idiomatic way of saying `fill(0, 0, 0, 0)`, but in this framework I'd rather be strict and avoid `None`
-    + In the DrawBot API functions often accept sequences of numbers for colors, points or boxes. For example:
+    The source code of TypedBot and the DrawBot docs are the best references. Here are some principles I followed (hopefully consistently across the API):
+    + I tried to avoid optionals as much as possible. In other words, I tried to avoid letting parameters accept `None` as a value. I know that `fill(None)` is an idiomatic way of saying `fill(0, 0, 0, 0)`, but in this framework, I'd rather be strict and avoid `None`
+    + In the DrawBot API functions often accept sequences of numbers for colors, points, or boxes. For example:
         ```
         fill(1, 0, 0)
         text('hello', (100, 100))
@@ -84,9 +84,9 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
             pass
         ```
     + I decided to extract some functionalities from `newPage`, `saveImage`, `fontVariations` and `openTypeFeatures` and to direct it to other functions.
-        + `newPage` accepts two floats for width and height and `newPageDefault` accepts a string value for a default page size, like "A4". Making a Union[float, str] for the first argument of the function did not make much sense IMHO
-        + `saveImage` is a very dense and cool method in DrawBot, but it is very difficult to annotate in a clear way! It has a ton of default keywork arguments, and I decided to make a clone for each format (png, jpg, pdf...)
-        + `fontVariations` and `openTypeFeatures` mix \*args and \*\*kwargs in order to be able to have `resetVariations` or `resetFeatures` boolean argument. It felt natural to extract this functionality into a separate functions `resetVariations()` and `resetFeatures()`
+        + `newPage` accepts two floats for width and height and `newPageDefault` accepts a string value for a default page size, like "A4". Making a `Union[float, str]` for the first argument of the function did not make much sense IMHO
+        + `saveImage` is a very dense and cool method in DrawBot, but it is very difficult to annotate clearly! It has a ton of default keywork arguments, and I decided to make a clone for each format (png, jpg, pdf...)
+        + `fontVariations` and `openTypeFeatures` mix `\*args` and `\*\*kwargs` in order to be able to have `resetVariations` or `resetFeatures` boolean argument. It felt natural to extract this functionality into separate functions `resetVariations()` and `resetFeatures()`
 
 + This project is cool, I want to help you. How can I contribute to it?
 
@@ -107,8 +107,8 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + I like the general sense of TypedBot, but I do not like SOME features
 
-    TypedBot is also an opportunity to sparkle some (healthy I hope) discussion in the type-tech-tool world about annotations. Do we want to use them? Should we make an effort to annotate existing code bases? Maybe not, I am not sure. So, if you do not agree with my choices, that's fine. Open an issue, maybe submit a pull request with your ideas, and let's discuss!
-    I also invite you to try it in your projects, if you think the wrapping should happen in a different way, you don't need to wrap the entire API, just work on the functions you need and give it a spin!
+    TypedBot is also an opportunity to sparkle some (healthy I hope) discussion in the type-tech-tool world about annotations. Do we want to use them? Should we make an effort to annotate existing codebases? Maybe not, I am not sure. So, if you do not agree with my choices, that's fine. Open an issue, maybe submit a pull request with your ideas, and let's discuss!
+    I also invite you to try it in your projects, if you think the wrapping should happen differently, you don't need to wrap the entire API, just work on the functions you need and give it a spin!
 
 + What about the license?
 
