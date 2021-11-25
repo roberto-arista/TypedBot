@@ -31,7 +31,7 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + Type annotations are an interesting topic, I want to know more.
 
-    You can start read a few PEPs related to type annotatios:
+    You can start reading a few PEPs related to type annotatios:
     + [PEP 484 -- Type Hints](https://www.python.org/dev/peps/pep-0484/)
     + [PEP 526 -- Syntax for Variable Annotations](https://www.python.org/dev/peps/pep-0526/)
     + [PEP 3107 -- Function Annotations](https://www.python.org/dev/peps/pep-3107/)
