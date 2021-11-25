@@ -18,10 +18,18 @@ CMYK_TRANSPARENT = CMYKColor(c=0, m=0, y=0, k=0, a=0)
 
 # -- Colors -- #
 def fill(color: Color):
-    dB.fill(*color)
+    # apparently for drawBot fill(0, 0, 0, 0) is different from fill(None)
+    if color.a == 0:
+        dB.fill(None)
+    else:
+        dB.fill(*color)
 
 def stroke(color: Color):
-    dB.stroke(*color)
+    # apparently for drawBot stroke(0, 0, 0, 0) is different from stroke(None)
+    if color.a == 0:
+        dB.stroke(None)
+    else:
+        dB.stroke(*color)
 
 def linearGradient(startPt: Point, endPoint: Point,
                    colors: List[Color], locations=List[float]):

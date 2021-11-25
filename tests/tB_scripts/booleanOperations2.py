@@ -1,5 +1,5 @@
 import typedBot as tB
-tB.newDrawing()
+
 tB.newPage(600, 100)
 p1 = tB.BezierPath()
 p1.oval(tB.Box(5, 5, 70, 70))

@@ -58,10 +58,16 @@ def closePath():
     dB.closePath()
 
 def drawPath(path: Optional[BezierPath] = None):
-    dB.drawPath(path)
+    if path:
+        dB.drawPath(path.wrapped)
+    else:
+        dB.drawPath()
 
 def clipPath(path: Optional[BezierPath] = None):
-    dB.clipPath(path)
+    if path:
+        dB.clipPath(path.wrapped)
+    else:
+        dB.clipPath()
 
 
 # -- Path Properties -- #
@@ -187,19 +193,20 @@ class BezierPath:
                    offset: Point = Point(0, 0),
                    font: Optional[str] = 'LucidaGrande',
                    fontSize: float = 10,
-                   align=Alignment.left):
-        if isinstance(txt, FormattedString):
-            self.wrapped.text(txt.wrapped, offset=offset, font=font, fontSize=fontSize, align=align.name)
-        else:
-            self.wrapped.text(txt, offset=offset, font=font, fontSize=fontSize, align=align.name)
+                   align: Optional[Alignment] = None):
+        toTypeset: Union[FormattedString, str] = txt.wrapped if isinstance(txt, FormattedString) else txt
+        self.wrapped.text(toTypeset, offset=offset, font=font,
+                          fontSize=fontSize, align=align.name if align else None)
 
     def textBox(self, txt: Union[FormattedString, str],
                       box: Box,
                       font: Optional[str] = 'LucidaGrande',
                       fontSize: float = 10,
-                      align: Alignment = Alignment.left,
+                      align: Optional[Alignment] = None,
                       hyphenation: bool = False):
-        self.wrapped.textBox(txt, box, font, fontSize, f'{align}', hyphenation)
+        toTypeset: Union[FormattedString, str] = txt.wrapped if isinstance(txt, FormattedString) else txt
+        self.wrapped.textBox(toTypeset, box=box, font=font,
+                             fontSize=fontSize, align=align.name if align else None, hyphenation=hyphenation)
 
     def getNSBezierPath(self) -> NSBezierPath:
         return self.wrapped.getNSBezierPath()
@@ -239,7 +246,7 @@ class BezierPath:
         self.wrapped.rotate(angle, center)
 
     def scale(self, x: float, y: float, center: Point = Point(0, 0)):
-        self.wrapped.scale(x, y)
+        self.wrapped.scale(x, y, center)
 
     def skew(self, angle1: float, angle2: float = 0, center: Point = Point(0, 0)):
         self.wrapped.skew(angle1, angle2, center)
@@ -251,17 +258,25 @@ class BezierPath:
         self.wrapped.removeOverlap()
 
     # boolean operations
-    def union(self, other: BezierPath):
-        self.wrapped.union(other.wrapped)
+    def union(self, other: BezierPath) -> BezierPath:
+        new = BezierPath()
+        new.wrapped = self.wrapped.union(other.wrapped)
+        return new
 
-    def difference(self, other: BezierPath):
-        self.wrapped.difference(other.wrapped)
+    def difference(self, other: BezierPath) -> BezierPath:
+        new = BezierPath()
+        new.wrapped = self.wrapped.difference(other.wrapped)
+        return new
 
-    def intersection(self, other: BezierPath):
-        self.wrapped.intersection(other.wrapped)
+    def intersection(self, other: BezierPath) -> BezierPath:
+        new = BezierPath()
+        new.wrapped = self.wrapped.intersection(other.wrapped)
+        return new
 
-    def xor(self, other: BezierPath):
-        self.wrapped.xor(other.wrapped)
+    def xor(self, other: BezierPath) -> BezierPath:
+        new = BezierPath()
+        new.wrapped = self.wrapped.xor(other.wrapped)
+        return new
 
     def intersectionPoints(self, other: Optional[BezierPath]):
         self.wrapped.intersectionPoints(other.wrapped if other else None)

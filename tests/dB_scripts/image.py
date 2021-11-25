@@ -1,6 +1,6 @@
 import drawBot
 drawBot.newPage(500, 500)
-imagePath = "../data/drawBot.jpg"
+imagePath = "tests/data/drawBot.jpg"
 w, h = drawBot.imageSize(imagePath)
 drawBot.scale(250 / w)
 drawBot.image(imagePath, (0, 0))

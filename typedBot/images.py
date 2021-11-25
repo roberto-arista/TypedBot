@@ -26,7 +26,8 @@ def imageSize(path: Path, pageNumber: Optional[int] = None) -> Tuple[float, floa
     return dB.imageSize(strPath, pageNumber)
 
 def imagePixelColor(path: Path, point: Point) -> Color:
-    return Color(*dB.imagePixelColor(path, point))
+    strPath = path if not isinstance(path, Path) else f'{path}'
+    return Color(*dB.imagePixelColor(strPath, point))
 
 def imageResolution(path: Path) -> float:
     strPath = path if not isinstance(path, Path) else f'{path}'

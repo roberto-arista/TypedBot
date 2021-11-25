@@ -16,6 +16,10 @@ tB.stroke(tB.Color(0, 1, 0))
 tB.strokeWidth(1)
 tB.line(tB.Point(0, 50), tB.Point(tB.width(), 50))
 tB.stroke(transparent)
+
+import drawBot as dB
+dB.stroke(None)
+
 tB.fill(tB.Color(0, 1, 1))
 tB.fontSize(20)
 tB.text("foo bar", tB.Point(tB.width()*.5, 100), align=tB.Alignment.right)
