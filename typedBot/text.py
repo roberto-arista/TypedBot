@@ -63,10 +63,10 @@ class FormattedString:
     def append(self, txt, **kwargs):
         self.wrapped.append(txt, **kwargs)
 
-    def font(self, fontNameOrPath: str, fontSize: float = None, fontNumber: int = 0):
+    def font(self, fontNameOrPath: Union[str, Path], fontSize: float = None, fontNumber: int = 0):
         self.wrapped.font(fontNameOrPath, fontSize, fontNumber)
 
-    def fallbackFont(self, fontNameOrPath: str, fontNumber: int = 0):
+    def fallbackFont(self, fontNameOrPath: Union[str, Path], fontNumber: int = 0):
         self.wrapped.fallbackFont(fontNameOrPath, fontNumber)
 
     def fontSize(self, fontSize: float):
@@ -111,7 +111,7 @@ class FormattedString:
     def resetFeatures(self):
         self.wrapped.openTypeFeatures(resetFeatures=True)
 
-    def listOpenTypeFeatures(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
+    def listOpenTypeFeatures(self, fontNameOrPath: Optional[Union[str, Path]] = None, fontNumber: int = 0) -> List[str]:
         return self.wrapped.listOpenTypeFeatures(fontNameOrPath, fontNumber)
 
     def resetVariations(self):
@@ -120,10 +120,10 @@ class FormattedString:
     def fontVariations(self, **axes: float):
         self.wrapped.fontVariations(**axes)
 
-    def listFontVariations(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
+    def listFontVariations(self, fontNameOrPath: Optional[Union[str]] = None, fontNumber: int = 0) -> List[str]:
         return self.wrapped.listFontVariations(fontNameOrPath, fontNumber)
 
-    def listNamedInstances(self, fontNameOrPath: Optional[str] = None, fontNumber: int = 0) -> List[str]:
+    def listNamedInstances(self, fontNameOrPath: Optional[Union[str]] = None, fontNumber: int = 0) -> List[str]:
         return self.wrapped.listNamedInstances(fontNameOrPath, fontNumber)
 
     def tabs(self, *tabs: Tuple[float, Alignment]):
