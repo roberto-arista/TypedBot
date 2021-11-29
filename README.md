@@ -13,9 +13,9 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
     Well, that's not so easy. Let's start with a wrapper around DrawBot, then we'll see.
 
-+ What is DrawBot?
++ What is [DrawBot](https://www.drawbot.com)?
 
-    I usually present DrawBot to non-type people in this way: "It is a cousin of Processing, but: (1) you write Python code, (2) it handles text and vectors super well with powerful APIs like `BezierPath` and `FormattedString`, (3) it's not meant for real-time interaction". Quoting from the DrawBot home page:
+    I usually present DrawBot to non-type people in this way: "It is a cousin of [Processing](https://processing.org), but: (1) you write Python code, (2) it handles text and vectors super well with powerful APIs like `BezierPath` and `FormattedString`, (3) it's not meant for real-time interaction". Quoting from the DrawBot home page:
     
     > DrawBot is a powerful, free application for macOS that invites you to write simple python scripts to generate two-dimensional graphics. 
 
@@ -52,11 +52,16 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + Wait, is this stable? Can I use it in production?
 
-    Yes, no, almost. DrawBot is stable and well tested. TypedBot, not yet. Some tests are still failing, and part of the DrawBot API is not annotated yet (see `imageObject`). I am using this module in a couple of projects and the experience acquired will probably push me to adjust or change some things. IMHO you can use it, but you need to be a bit flexible
+    Yes, no, almost. DrawBot is stable and well tested. TypedBot, not yet. Consider that:
+
+    + part of the DrawBot API is not annotated yet (see `imageObject`)
+    + I am using this module in a couple of projects and the experience acquired will probably push me to adjust or change some things
+
+    IMHO you can use it, but you need to be a bit flexible
 
 + Is the TypedBot API equivalent to the DrawBot API?
 
-    Not completely. Type annotations syntax allows to annotate functions and methods of any kind in Python, but the result is not always great code. Considering that this wrapper is separate from DrawBot and that it does not break any existing functionality, I decided to take some liberty.
+    Not completely. Type annotations syntax allows to annotate functions and methods of any kind in Python, but the result is not always great code. Considering that this wrapper is separate from DrawBot and that it does not break any existing functionality, I decided to take some liberty
 
 + Ok, so how do I know what differs between the two APIs?
 
@@ -86,12 +91,12 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
     + I decided to extract some functionalities from `newPage`, `saveImage`, `fontVariations` and `openTypeFeatures` and to direct it to other functions.
         + `newPage` accepts two floats for width and height and `newPageDefault` accepts a string value for a default page size, like "A4". Making a `Union[float, str]` for the first argument of the function did not make much sense IMHO
         + `saveImage` is a very dense and cool method in DrawBot, but it is very difficult to annotate clearly! It has a ton of default keywork arguments, and I decided to make a clone for each format (png, jpg, pdf...)
-        + `fontVariations` and `openTypeFeatures` mix `\*args` and `\*\*kwargs` in order to be able to have `resetVariations` or `resetFeatures` boolean argument. It felt natural to extract this functionality into separate functions `resetVariations()` and `resetFeatures()`
+        + `fontVariations` and `openTypeFeatures` mix `*args` and `**kwargs` in order to be able to have `resetVariations` or `resetFeatures` boolean argument. It felt natural to extract this functionality into separate functions `resetVariations()` and `resetFeatures()`
 
 + This project is cool, I want to help you. How can I contribute to it?
 
     That's great! Right now I see three areas where I could need some help:
-    + Some tests are still failing. I'll work on these, but if you have time to figure out what's wrong, be my guest!
+    + It would be great to increase the test suite and compare even more scripts between drawBot and typedBot
     + It would be nice to have some docs online. I don't know what these docs should show, probably each method should have a link to the drawBot's original version and the annotations.
     + Part of the API is not annotated yet. For example the `imageObject`. It has a large API (about 100 methods?) and I seldom use it. So, it's not my priority to annotate it.
 
@@ -116,4 +121,4 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
 + Extra note
 
-    I started to develop this project during the Winter 1 2021 batch at [Recurse Center](https://www.recurse.com). Such a cool place!
+    I started to develop this project during the Winter #1 2021 batch at [Recurse Center](https://www.recurse.com). Such a cool place!
