@@ -26,7 +26,6 @@ data = [
     param("cmykLinearGradient.py"),
     param("cmykRadialGradient.py"),
     param("fill.py"),
-    param("fontAttributes.py", marks=mark.xfail),
     param("fontPath.py"),
     param("fontVariations.py"),
     param("fontVariations2.py"),
@@ -35,7 +34,7 @@ data = [
     param("image3.py"),
     param("image4.py"),
     param("imageHTTP.py"),
-    param("imagePixelColor.py", marks=mark.xfail),
+    param("imagePixelColor.py"),
     param("line.py"),
     param("linearGradient.py"),
     param("openTypeFeatures_kern.py"),
@@ -55,7 +54,6 @@ data = [
     param("shapes.py"),
     param("text.py"),
     param("text2.py"),
-    param("traceback.py", marks=mark.xfail),
 ]
 
 # -- Helpers -- #
