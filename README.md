@@ -59,6 +59,10 @@ A type annotated wrapper around [DrawBot](https://www.drawbot.com)
 
     IMHO you can use it, but you need to be a bit flexible
 
++ How do I know if TypeBot draws in the same way DrawBot does?
+
+    TypedBot tests suite revolves around this issue. I ported a selection of scripts coming from the DrawBot tests suite, made a "translation" to TypedBot, and compared the results pixel by pixel. If you think that some functionality is not properly tested yet, let me know with an issue 
+
 + Is the TypedBot API equivalent to the DrawBot API?
 
     Not completely. Type annotations syntax allows to annotate functions and methods of any kind in Python, but the result is not always great code. Considering that this wrapper is separate from DrawBot and that it does not break any existing functionality, I decided to take some liberty
