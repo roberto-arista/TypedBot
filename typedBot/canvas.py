@@ -46,7 +46,7 @@ def getSize(defaultSize: str) -> Box:
 
 def getAllSizes() -> Dict[str, Box]:
     allSizes = {}
-    for name, (wdt, hgt) in dB.sizes():
+    for name, (wdt, hgt) in dB.sizes().items():
         allSizes[name] = Box(x=0, y=0, wdt=wdt, hgt=hgt)
     return allSizes
 
