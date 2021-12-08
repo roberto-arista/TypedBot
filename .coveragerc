@@ -1,0 +1,9 @@
+# .coveragerc to control coverage.py
+
+[run]
+omit =
+    */tests/*
+    */typedBot/__init__.py
+
+[html]
+directory = htmlcov
