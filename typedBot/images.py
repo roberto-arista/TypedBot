@@ -5,6 +5,7 @@
 # ------ #
 
 # -- Modules -- #
+import os
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -16,26 +17,21 @@ from .structures import Point, Color, Box
 
 # -- Drawing Images -- #
 def image(path: Path, point: Point, alpha: float = 1, pageNumber: Optional[int] = None):
-    strPath = path if not isinstance(path, Path) else f'{path}'
-    dB.image(strPath, point, alpha, pageNumber)
+    dB.image(os.fspath(path), point, alpha, pageNumber)
 
 
 # -- Image Properties -- #
 def imageSize(path: Path, pageNumber: Optional[int] = None) -> Tuple[float, float]:
-    strPath = path if not isinstance(path, Path) else f'{path}'
-    return dB.imageSize(strPath, pageNumber)
+    return dB.imageSize(os.fspath(path), pageNumber)
 
 def imagePixelColor(path: Path, point: Point) -> Color:
-    strPath = path if not isinstance(path, Path) else f'{path}'
-    return Color(*dB.imagePixelColor(strPath, point))
+    return Color(*dB.imagePixelColor(os.fspath(path), point))
 
 def imageResolution(path: Path) -> float:
-    strPath = path if not isinstance(path, Path) else f'{path}'
-    return dB.imageResolution(strPath)
+    return dB.imageResolution(os.fspath(path))
 
 def numberOfPages(path: Path) -> int:
-    strPath = path if not isinstance(path, Path) else f'{path}'
-    return dB.numberOfPages(strPath)
+    return dB.numberOfPages(os.fspath(path))
 
 
 # -- Image Object -- #
@@ -54,8 +50,7 @@ class ImageObject(IM):
         super().clearFilters()
 
     def open(self, path: Path):
-        strPath = path if not isinstance(path, Path) else f'{path}'
-        super().open(strPath)
+        super().open(os.fspath(path))
 
     def copy(self):
         pass

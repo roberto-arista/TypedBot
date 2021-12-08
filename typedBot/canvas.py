@@ -7,6 +7,7 @@
 
 # -- Modules -- #
 from typing import Dict, Optional, Union
+import os
 from pathlib import Path
 
 from AppKit import NSData, NSColor   # PDFDocument
@@ -116,7 +117,7 @@ def printInstructions():
 
 def savePDF(path: Path, multipage: bool = True):
     assert(path.suffix.lower() == '.pdf')
-    dB.saveImage(f'{path}', multipage=multipage)
+    dB.saveImage(os.fspath(path), multipage=multipage)
 
 def savePNG(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
@@ -133,7 +134,7 @@ def savePNG(path: Path, imageResolution: float = 72,
         # imagePNGInterlaced=imagePNGInterlaced,
         # imageColorSyncProfileData=imageColorSyncProfileData,
     )
-    dB.saveImage(f'{path}', **kwargs)
+    dB.saveImage(os.fspath(path), **kwargs)
 
 def saveJPG(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
@@ -143,7 +144,7 @@ def saveJPG(path: Path, imageResolution: float = 72,
                         imageFallbackBackgroundColor: Union[NSColor, Color] = WHITE,
                         imageColorSyncProfileData: Optional[NSData] = None):
     assert(path.suffix.lower() == '.jpg')
-    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imageJPEGCompressionFactor, imageJPEGProgressive, imageFallbackBackgroundColor, imageColorSyncProfileData)
+    dB.saveImage(os.fspath(path), imageResolution, antiAliasing, multipage, imageJPEGCompressionFactor, imageJPEGProgressive, imageFallbackBackgroundColor, imageColorSyncProfileData)
 
 def saveTIF(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
@@ -151,11 +152,11 @@ def saveTIF(path: Path, imageResolution: float = 72,
                         imageTIFFCompressionMethod: Optional[str] = None,
                         imageColorSyncProfileData: Optional[NSData] = None):
     assert(path.suffix.lower() in ['.tif', '.tiff'])
-    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imageTIFFCompressionMethod, imageColorSyncProfileData)
+    dB.saveImage(os.fspath(path), imageResolution, antiAliasing, multipage, imageTIFFCompressionMethod, imageColorSyncProfileData)
 
 def saveSVG(path: Path, multipage: bool = False):
     assert(path.suffix.lower() == '.svg')
-    dB.saveImage(f'{path}', multipage)
+    dB.saveImage(os.fspath(path), multipage)
 
 def saveGIF(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
@@ -165,13 +166,13 @@ def saveGIF(path: Path, imageResolution: float = 72,
                         imageColorSyncProfileData: Optional[NSData] = None,
                         imageGIFLoop: bool = True):
     assert(path.suffix.lower() == '.gif')
-    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage, imageGIFDitherTransparency, imageGIFRGBColorTable, imageColorSyncProfileData, imageGIFLoop)
+    dB.saveImage(os.fspath(path), imageResolution, antiAliasing, multipage, imageGIFDitherTransparency, imageGIFRGBColorTable, imageColorSyncProfileData, imageGIFLoop)
 
 def saveBMP(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False):
     assert(path.suffix.lower() == '.bmp')
-    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage)
+    dB.saveImage(os.fspath(path), imageResolution, antiAliasing, multipage)
 
 def saveMP4(path, ffmpegCodec: str = 'libx264',
                   imageResolution: float = 72,
@@ -180,13 +181,13 @@ def saveMP4(path, ffmpegCodec: str = 'libx264',
                   imagePNGInterlaced: bool = True,
                   imageColorSyncProfileData: Optional[NSData] = None):
     assert(path.suffix.lower() == '.mp4')
-    dB.saveImage(f'{path}', ffmpegCodec, imageResolution, antiAliasing, imagePNGGamma, imagePNGInterlaced, imageColorSyncProfileData)
+    dB.saveImage(os.fspath(path), ffmpegCodec, imageResolution, antiAliasing, imagePNGGamma, imagePNGInterlaced, imageColorSyncProfileData)
 
 def saveICNS(path: Path, imageResolution: float = 72,
                         antiAliasing: bool = True,
                         multipage: bool = False):
     assert(path.suffix.lower() == '.icns')
-    dB.saveImage(f'{path}', imageResolution, antiAliasing, multipage)
+    dB.saveImage(os.fspath(path), imageResolution, antiAliasing, multipage)
 
 def printImage(pdfPath: Optional[Path] = None):
     dB.printImage(f'{pdfPath}')
