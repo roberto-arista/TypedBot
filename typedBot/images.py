@@ -9,10 +9,10 @@ import os
 from pathlib import Path
 from typing import Optional, Tuple
 
-import drawBot as dB
+from drawBot import _drawBotDrawingTool as dB
 from drawBot.context.tools.imageObject import ImageObject as IM
 
-from .structures import Point, Color, Box
+from .structures import Box, Color, Point
 
 
 # -- Drawing Images -- #
@@ -24,11 +24,14 @@ def image(path: Path, point: Point, alpha: float = 1, pageNumber: Optional[int] 
 def imageSize(path: Path, pageNumber: Optional[int] = None) -> Tuple[float, float]:
     return dB.imageSize(os.fspath(path), pageNumber)
 
+
 def imagePixelColor(path: Path, point: Point) -> Color:
     return Color(*dB.imagePixelColor(os.fspath(path), point))
 
+
 def imageResolution(path: Path) -> float:
     return dB.imageResolution(os.fspath(path))
+
 
 def numberOfPages(path: Path) -> int:
     return dB.numberOfPages(os.fspath(path))
@@ -36,7 +39,6 @@ def numberOfPages(path: Path) -> int:
 
 # -- Image Object -- #
 class ImageObject(IM):
-
     def __init__(self, path: Optional[Path] = None):
         super().__init__(path)
 
@@ -86,7 +88,9 @@ class ImageObject(IM):
     def colorMatrix(self, RVector=None, GVector=None, BVector=None, AVector=None, biasVector=None):
         super().colorMatrix(RVector, GVector, BVector, AVector, biasVector)
 
-    def colorPolynomial(self, redCoefficients=None, greenCoefficients=None, blueCoefficients=None, alphaCoefficients=None):
+    def colorPolynomial(
+        self, redCoefficients=None, greenCoefficients=None, blueCoefficients=None, alphaCoefficients=None
+    ):
         super().colorPolynomial(redCoefficients, greenCoefficients, blueCoefficients, alphaCoefficients)
 
     def exposureAdjust(self, EV=None):
@@ -317,23 +321,90 @@ class ImageObject(IM):
     def constantColorGenerator(self, size, color=None):
         super().constantColorGenerator(size, color)
 
-    def lenticularHaloGenerator(self, size, center=None, color=None, haloRadius=None, haloWidth=None, haloOverlap=None, striationStrength=None, striationContrast=None, time=None):
-        super().lenticularHaloGenerator(size, center, color, haloRadius, haloWidth, haloOverlap, striationStrength, striationContrast, time)
+    def lenticularHaloGenerator(
+        self,
+        size,
+        center=None,
+        color=None,
+        haloRadius=None,
+        haloWidth=None,
+        haloOverlap=None,
+        striationStrength=None,
+        striationContrast=None,
+        time=None,
+    ):
+        super().lenticularHaloGenerator(
+            size, center, color, haloRadius, haloWidth, haloOverlap, striationStrength, striationContrast, time
+        )
 
-    def PDF417BarcodeGenerator(self, size, message=None, minWidth=None, maxWidth=None, minHeight=None, maxHeight=None, dataColumns=None, rows=None, preferredAspectRatio=None, compactionMode=None, compactStyle=None, correctionLevel=None, alwaysSpecifyCompaction=None):
-        super().PDF417BarcodeGenerator(size, message, minWidth, maxWidth, minHeight, maxHeight, dataColumns, rows, preferredAspectRatio, compactionMode, compactStyle, correctionLevel, alwaysSpecifyCompaction)
+    def PDF417BarcodeGenerator(
+        self,
+        size,
+        message=None,
+        minWidth=None,
+        maxWidth=None,
+        minHeight=None,
+        maxHeight=None,
+        dataColumns=None,
+        rows=None,
+        preferredAspectRatio=None,
+        compactionMode=None,
+        compactStyle=None,
+        correctionLevel=None,
+        alwaysSpecifyCompaction=None,
+    ):
+        super().PDF417BarcodeGenerator(
+            size,
+            message,
+            minWidth,
+            maxWidth,
+            minHeight,
+            maxHeight,
+            dataColumns,
+            rows,
+            preferredAspectRatio,
+            compactionMode,
+            compactStyle,
+            correctionLevel,
+            alwaysSpecifyCompaction,
+        )
 
     def randomGenerator(self, size):
         super().randomGenerator(size)
 
-    def starShineGenerator(self, size, center=None, color=None, radius=None, crossScale=None, crossAngle=None, crossOpacity=None, crossWidth=None, epsilon=None):
-        super().starShineGenerator(size, center, color, radius, crossScale, crossAngle, crossOpacity, crossWidth, epsilon)
+    def starShineGenerator(
+        self,
+        size,
+        center=None,
+        color=None,
+        radius=None,
+        crossScale=None,
+        crossAngle=None,
+        crossOpacity=None,
+        crossWidth=None,
+        epsilon=None,
+    ):
+        super().starShineGenerator(
+            size, center, color, radius, crossScale, crossAngle, crossOpacity, crossWidth, epsilon
+        )
 
     def stripesGenerator(self, size, center=None, color0=None, color1=None, width=None, sharpness=None):
         super().stripesGenerator(size, center, color0, color1, width, sharpness)
 
-    def sunbeamsGenerator(self, size, center=None, color=None, sunRadius=None, maxStriationRadius=None, striationStrength=None, striationContrast=None, time=None):
-        super().sunbeamsGenerator(size, center, color, sunRadius, maxStriationRadius, striationStrength, striationContrast, time)
+    def sunbeamsGenerator(
+        self,
+        size,
+        center=None,
+        color=None,
+        sunRadius=None,
+        maxStriationRadius=None,
+        striationStrength=None,
+        striationContrast=None,
+        time=None,
+    ):
+        super().sunbeamsGenerator(
+            size, center, color, sunRadius, maxStriationRadius, striationStrength, striationContrast, time
+        )
 
     def crop(self, rectangle=None):
         super().crop(rectangle)
@@ -437,7 +508,9 @@ class ImageObject(IM):
     def crystallize(self, radius=None, center=None):
         super().crystallize(radius, center)
 
-    def depthOfField(self, point0=None, point1=None, saturation=None, unsharpMaskRadius=None, unsharpMaskIntensity=None, radius=None):
+    def depthOfField(
+        self, point0=None, point1=None, saturation=None, unsharpMaskRadius=None, unsharpMaskIntensity=None, radius=None
+    ):
         super().depthOfField(point0, point1, saturation, unsharpMaskRadius, unsharpMaskIntensity, radius)
 
     def edges(self, intensity=None):
@@ -470,8 +543,35 @@ class ImageObject(IM):
     def shadedMaterial(self, shadingImage=None, scale=None):
         super().shadedMaterial(shadingImage, scale)
 
-    def spotColor(self, centerColor1=None, replacementColor1=None, closeness1=None, contrast1=None, centerColor2=None, replacementColor2=None, closeness2=None, contrast2=None, centerColor3=None, replacementColor3=None, closeness3=None, contrast3=None):
-        super().spotColor(centerColor1, replacementColor1, closeness1, contrast1, centerColor2, replacementColor2, closeness2, contrast2, centerColor3, replacementColor3, closeness3, contrast3)
+    def spotColor(
+        self,
+        centerColor1=None,
+        replacementColor1=None,
+        closeness1=None,
+        contrast1=None,
+        centerColor2=None,
+        replacementColor2=None,
+        closeness2=None,
+        contrast2=None,
+        centerColor3=None,
+        replacementColor3=None,
+        closeness3=None,
+        contrast3=None,
+    ):
+        super().spotColor(
+            centerColor1,
+            replacementColor1,
+            closeness1,
+            contrast1,
+            centerColor2,
+            replacementColor2,
+            closeness2,
+            contrast2,
+            centerColor3,
+            replacementColor3,
+            closeness3,
+            contrast3,
+        )
 
     def spotLight(self, lightPosition=None, lightPointsAt=None, brightness=None, concentration=None, color=None):
         super().spotLight(lightPosition, lightPointsAt, brightness, concentration, color)
@@ -521,35 +621,81 @@ class ImageObject(IM):
     def twelvefoldReflectedTile(self, center=None, angle=None, width=None):
         super().twelvefoldReflectedTile(center, angle, width)
 
-    def accordionFoldTransition(self, targetImage=None, bottomHeight=None, numberOfFolds=None, foldShadowAmount=None, time=None):
+    def accordionFoldTransition(
+        self, targetImage=None, bottomHeight=None, numberOfFolds=None, foldShadowAmount=None, time=None
+    ):
         super().accordionFoldTransition(targetImage, bottomHeight, numberOfFolds, foldShadowAmount, time)
 
     def barsSwipeTransition(self, targetImage=None, angle=None, width=None, barOffset=None, time=None):
         super().barsSwipeTransition(targetImage, angle, width, barOffset, time)
 
-    def copyMachineTransition(self, targetImage=None, extent=None, color=None, time=None, angle=None, width=None, opacity=None):
+    def copyMachineTransition(
+        self, targetImage=None, extent=None, color=None, time=None, angle=None, width=None, opacity=None
+    ):
         super().copyMachineTransition(targetImage, extent, color, time, angle, width, opacity)
 
-    def disintegrateWithMaskTransition(self, targetImage=None, maskImage=None, time=None, shadowRadius=None, shadowDensity=None, shadowOffset=None):
+    def disintegrateWithMaskTransition(
+        self, targetImage=None, maskImage=None, time=None, shadowRadius=None, shadowDensity=None, shadowOffset=None
+    ):
         super().disintegrateWithMaskTransition(targetImage, maskImage, time, shadowRadius, shadowDensity, shadowOffset)
 
     def dissolveTransition(self, targetImage=None, time=None):
         super().dissolveTransition(targetImage, time)
 
-    def flashTransition(self, targetImage=None, center=None, extent=None, color=None, time=None, maxStriationRadius=None, striationStrength=None, striationContrast=None, fadeThreshold=None):
-        super().flashTransition(targetImage, center, extent, color, time, maxStriationRadius, striationStrength, striationContrast, fadeThreshold)
+    def flashTransition(
+        self,
+        targetImage=None,
+        center=None,
+        extent=None,
+        color=None,
+        time=None,
+        maxStriationRadius=None,
+        striationStrength=None,
+        striationContrast=None,
+        fadeThreshold=None,
+    ):
+        super().flashTransition(
+            targetImage,
+            center,
+            extent,
+            color,
+            time,
+            maxStriationRadius,
+            striationStrength,
+            striationContrast,
+            fadeThreshold,
+        )
 
     def modTransition(self, targetImage=None, center=None, time=None, angle=None, radius=None, compression=None):
         super().modTransition(targetImage, center, time, angle, radius, compression)
 
-    def pageCurlTransition(self, targetImage=None, backsideImage=None, shadingImage=None, extent=None, time=None, angle=None, radius=None):
+    def pageCurlTransition(
+        self, targetImage=None, backsideImage=None, shadingImage=None, extent=None, time=None, angle=None, radius=None
+    ):
         super().pageCurlTransition(targetImage, backsideImage, shadingImage, extent, time, angle, radius)
 
-    def pageCurlWithShadowTransition(self, targetImage=None, backsideImage=None, extent=None, time=None, angle=None, radius=None, shadowSize=None, shadowAmount=None, shadowExtent=None):
-        super().pageCurlWithShadowTransition(targetImage, backsideImage, extent, time, angle, radius, shadowSize, shadowAmount, shadowExtent)
+    def pageCurlWithShadowTransition(
+        self,
+        targetImage=None,
+        backsideImage=None,
+        extent=None,
+        time=None,
+        angle=None,
+        radius=None,
+        shadowSize=None,
+        shadowAmount=None,
+        shadowExtent=None,
+    ):
+        super().pageCurlWithShadowTransition(
+            targetImage, backsideImage, extent, time, angle, radius, shadowSize, shadowAmount, shadowExtent
+        )
 
-    def rippleTransition(self, targetImage=None, shadingImage=None, center=None, extent=None, time=None, width=None, scale=None):
+    def rippleTransition(
+        self, targetImage=None, shadingImage=None, center=None, extent=None, time=None, width=None, scale=None
+    ):
         super().rippleTransition(targetImage, shadingImage, center, extent, time, width, scale)
 
-    def swipeTransition(self, targetImage=None, extent=None, color=None, time=None, angle=None, width=None, opacity=None):
+    def swipeTransition(
+        self, targetImage=None, extent=None, color=None, time=None, angle=None, width=None, opacity=None
+    ):
         super().swipeTransition(targetImage, extent, color, time, angle, width, opacity)

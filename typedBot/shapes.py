@@ -6,27 +6,31 @@
 
 # -- Modules -- #
 from __future__ import annotations
-from typing import Optional, List, Union, Tuple
 
-from .structures import Point, Box, Alignment, LineCap, LineJoin
-from .text import FormattedString
+from typing import List, Optional, Tuple, Union
 
 from AppKit import NSBezierPath
-from fontTools.misc.transform import Transform
-import drawBot as dB
-from drawBot.context.baseContext import BezierPath as BP
+from drawBot import _drawBotDrawingTool as dB
 from drawBot.context.baseContext import BezierContour as BC
+from drawBot.context.baseContext import BezierPath as BP
+from fontTools.misc.transform import Transform
+
+from .structures import Alignment, Box, LineCap, LineJoin, Point
+from .text import FormattedString
 
 
 # -- Primitives -- #
 def rect(box: Box):
     dB.rect(*box)
 
+
 def oval(box: Box):
     dB.oval(*box)
 
+
 def line(pt1: Point, pt2: Point):
     dB.line(pt1, pt2)
+
 
 def polygon(*points: Point, close: bool = True):
     dB.polygon(*points, close=close)
@@ -36,32 +40,41 @@ def polygon(*points: Point, close: bool = True):
 def newPath():
     dB.newPath()
 
+
 def moveTo(point: Point):
     dB.moveTo(point)
+
 
 def lineTo(point: Point):
     dB.lineTo(point)
 
+
 def curveTo(point1: Point, point2: Point, point3: Point):
     dB.curveTo(point1, point2, point3)
+
 
 def qCurveTo(*points: Point):
     dB.qCurveTo(*points)
 
+
 def arc(center: Point, radius: float, startAngle: float, endAngle: float, clockwise: bool):
     dB.arc(center, radius, startAngle, endAngle, clockwise)
+
 
 def arcTo(point1: Point, point2: Point, radius: float):
     dB.arcTo(point1, point2, radius)
 
+
 def closePath():
     dB.closePath()
+
 
 def drawPath(path: Optional[BezierPath] = None):
     if path:
         dB.drawPath(path.wrapped)
     else:
         dB.drawPath()
+
 
 def clipPath(path: Optional[BezierPath] = None):
     if path:
@@ -74,14 +87,18 @@ def clipPath(path: Optional[BezierPath] = None):
 def strokeWidth(value: float):
     dB.strokeWidth(value)
 
+
 def miterLimit(value: float):
     dB.miterLimit(value)
+
 
 def lineJoin(value: LineJoin):
     dB.lineJoin(value.name)
 
+
 def lineCap(value: LineCap):
     dB.lineCap(value.name)
+
 
 def lineDash(*values: float):
     dB.lineDash(*values)
@@ -89,7 +106,6 @@ def lineDash(*values: float):
 
 # -- BezierPath -- #
 class BezierPath:
-
     def __init__(self, path: Optional[BP] = None, glyphSet: Optional[List[str]] = None):
         self.wrapped = dB.BezierPath(path, glyphSet)
 
@@ -104,6 +120,7 @@ class BezierPath:
 
     def __mod__(self, otherPath: BezierPath):
         return self.difference(otherPath)
+
     __rmod__ = __mod__
 
     def __imod__(self, otherPath: BezierPath):
@@ -113,6 +130,7 @@ class BezierPath:
 
     def __or__(self, otherPath: BezierPath):
         return self.union(otherPath)
+
     __ror__ = __or__
 
     def __ior__(self, otherPath: BezierPath):
@@ -122,6 +140,7 @@ class BezierPath:
 
     def __and__(self, otherPath: BezierPath):
         return self.intersection(otherPath)
+
     __rand__ = __and__
 
     def __iand__(self, otherPath: BezierPath):
@@ -131,6 +150,7 @@ class BezierPath:
 
     def __xor__(self, otherPath: BezierPath):
         return self.xor(otherPath)
+
     __rxor__ = __xor__
 
     def __ixor__(self, otherPath: BezierPath):
@@ -165,10 +185,10 @@ class BezierPath:
     def addComponent(self, glyphName: str, transformation: Transform):
         self.wrapped.addComponent(glyphName, transformation)
 
-    def drawToPen(self, pen):   # here a swift protocol would be great
+    def drawToPen(self, pen):  # here a swift protocol would be great
         self.wrapped.drawToPen(pen)
 
-    def drawToPointPen(self, pointPen):   # idem
+    def drawToPointPen(self, pointPen):  # idem
         self.wrapped.drawToPointPen(pointPen)
 
     def arc(self, center, radius, startAngle, endAngle, clockwise):
@@ -189,24 +209,35 @@ class BezierPath:
     def polygon(self, *points: List[Point], close: bool = False):
         self.wrapped.polygon(*points, close=close)
 
-    def text(self, txt: Union[FormattedString, str],
-                   offset: Point = Point(0, 0),
-                   font: Optional[str] = 'LucidaGrande',
-                   fontSize: float = 10,
-                   align: Optional[Alignment] = None):
+    def text(
+        self,
+        txt: Union[FormattedString, str],
+        offset: Point = Point(0, 0),
+        font: Optional[str] = "LucidaGrande",
+        fontSize: float = 10,
+        align: Optional[Alignment] = None,
+    ):
         toTypeset: Union[FormattedString, str] = txt.wrapped if isinstance(txt, FormattedString) else txt
-        self.wrapped.text(toTypeset, offset=offset, font=font,
-                          fontSize=fontSize, align=align.name if align else None)
+        self.wrapped.text(toTypeset, offset=offset, font=font, fontSize=fontSize, align=align.name if align else None)
 
-    def textBox(self, txt: Union[FormattedString, str],
-                      box: Box,
-                      font: Optional[str] = 'LucidaGrande',
-                      fontSize: float = 10,
-                      align: Optional[Alignment] = None,
-                      hyphenation: bool = False):
+    def textBox(
+        self,
+        txt: Union[FormattedString, str],
+        box: Box,
+        font: Optional[str] = "LucidaGrande",
+        fontSize: float = 10,
+        align: Optional[Alignment] = None,
+        hyphenation: bool = False,
+    ):
         toTypeset: Union[FormattedString, str] = txt.wrapped if isinstance(txt, FormattedString) else txt
-        self.wrapped.textBox(toTypeset, box=box, font=font,
-                             fontSize=fontSize, align=align.name if align else None, hyphenation=hyphenation)
+        self.wrapped.textBox(
+            toTypeset,
+            box=box,
+            font=font,
+            fontSize=fontSize,
+            align=align.name if align else None,
+            hyphenation=hyphenation,
+        )
 
     def getNSBezierPath(self) -> NSBezierPath:
         return self.wrapped.getNSBezierPath()
@@ -281,10 +312,13 @@ class BezierPath:
     def intersectionPoints(self, other: Optional[BezierPath]):
         self.wrapped.intersectionPoints(other.wrapped if other else None)
 
-    def expandStroke(self, width: float,
-                           lineCap: LineCap = LineCap.round,
-                           lineJoin: LineJoin = LineJoin.round,
-                           miterLimit: float = 10):
+    def expandStroke(
+        self,
+        width: float,
+        lineCap: LineCap = LineCap.round,
+        lineJoin: LineJoin = LineJoin.round,
+        miterLimit: float = 10,
+    ):
         self.wrapped.expandStroke(width, lineCap.name, lineJoin.name, miterLimit)
 
     @property

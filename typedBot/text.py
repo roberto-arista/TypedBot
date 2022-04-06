@@ -5,16 +5,16 @@
 # ---- #
 
 # -- Modules -- #
-from typing import Union, Optional, List, Tuple
 from copy import deepcopy
 from pathlib import Path
+from typing import List, Optional, Tuple, Union
 
-import drawBot as dB
-from drawBot.context.baseContext import FormattedString as FS
 from AppKit import NSMutableAttributedString, NSSize
+from drawBot import _drawBotDrawingTool as dB
+from drawBot.context.baseContext import FormattedString as FS
 
-from .structures import Color, CMYKColor, Alignment
-from .structures import Underline, Point, Box
+from .structures import Alignment, Box, CMYKColor, Color, Point, Underline
+
 # from .shapes import BezierPath
 
 
@@ -153,7 +153,7 @@ class FormattedString:
     def getNSObject(self) -> NSMutableAttributedString:
         return self.wrapped.getNSObject()
 
-    def copy(self): # -> FormattedString:
+    def copy(self):  # -> FormattedString:
         return deepcopy(self)
 
     def fontContainsCharacters(self, characters: str) -> bool:
@@ -200,19 +200,20 @@ def text(txt: Union[str, FormattedString], point: Point, align: Optional[Alignme
     else:
         dB.text(txt, point, align.name if align else None)
 
-def textBox(txt: Union[str, FormattedString], box: Box,
-            align: Optional[Alignment] = None) -> str:
+
+def textBox(txt: Union[str, FormattedString], box: Box, align: Optional[Alignment] = None) -> str:
     if isinstance(txt, FormattedString):
         overflow = dB.textBox(txt.wrapped, box, align.name if align else None)
     else:
         overflow = dB.textBox(txt, box, align.name if align else None)
     return "" if not overflow else overflow
 
-def textSize(txt: str,
-             align: Optional[Alignment] = None,
-             width: Optional[float] = None,
-             height: Optional[float] = None):
+
+def textSize(
+    txt: str, align: Optional[Alignment] = None, width: Optional[float] = None, height: Optional[float] = None
+):
     dB.textSize(txt, align.name if align else None, width, height)
+
 
 def textOverflow(txt: str, box: Box, align: Alignment = Alignment.left) -> str:
     if isinstance(txt, FormattedString):
@@ -221,86 +222,106 @@ def textOverflow(txt: str, box: Box, align: Alignment = Alignment.left) -> str:
         overflow = dB.textOverflow(txt, box, align.name)
     return "" if not overflow else overflow
 
+
 # Union[Box, BezierPath]
 def textBoxBaselines(txt: str, bounds: Union[Box], align: Alignment = Alignment.left) -> List[Point]:
     return [Point(*pp) for pp in dB.textBoxBaselines(txt, bounds, align)]
+
 
 # Union[Box, BezierPath]
 def textBoxCharacterBounds(txt: str, bounds: Union[Box], align: Alignment = Alignment.left) -> List[Box]:
     return [Box(*pp) for pp in dB.textBoxBaselines(txt, bounds, align)]
 
+
 def installedFonts(characters: Optional[str] = None) -> List[str]:
     return dB.installedFonts(characters)
 
+
 def installFont(path: Path):
-    dB.installFont(path=f'{path}')
+    dB.installFont(path=f"{path}")
+
 
 def uninstallFont(path: Path):
-    dB.installFont(f'{path}')
+    dB.installFont(f"{path}")
 
 
 # -- Text Properties -- #
-def font(fontNameOrPath: Union[str, Path],
-         fontSize: Optional[float] = None,
-         fontNumber: int = 0):
-    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
+def font(fontNameOrPath: Union[str, Path], fontSize: Optional[float] = None, fontNumber: int = 0):
+    fontNameOrPath = f"{fontNameOrPath}" if isinstance(fontNameOrPath, Path) else fontNameOrPath
     dB.font(fontNameOrPath, fontSize, fontNumber)
 
-def fallbackFont(fontNameOrPath: Union[str, Path],
-                 fontNumber: int = 0):
-    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
+
+def fallbackFont(fontNameOrPath: Union[str, Path], fontNumber: int = 0):
+    fontNameOrPath = f"{fontNameOrPath}" if isinstance(fontNameOrPath, Path) else fontNameOrPath
     dB.fallbackFont(fontNameOrPath, fontNumber)
+
 
 def fontSize(fontSize: float):
     dB.fontSize(fontSize)
 
+
 def lineHeight(value: float):
     dB.lineHeight(value)
+
 
 def tracking(value: float):
     dB.tracking(value)
 
+
 def baselineShift(value: float):
     dB.baselineShift(value)
+
 
 def underline(value: Underline):
     dB.underline(value)
 
+
 def url(value: str):
     dB.url(value)
+
 
 def hyphenation(value: bool):
     dB.hyphenation(value)
 
+
 def tabs(*tabs: Tuple[float, Alignment]):
     dB.tabs(*[(tt, aa.name) for (tt, aa) in tabs])
+
 
 def language(language: str):
     dB.language(language)
 
+
 def listLanguages(self) -> List[str]:
     return dB.listLanguages()
+
 
 def openTypeFeatures(**features: bool):
     dB.openTypeFeatures(**features)
 
+
 def resetFeatures():
     dB.openTypeFeatures(resetFeatures=True)
 
+
 def listOpenTypeFeatures(fontNameOrPath: Optional[Union[str, Path]] = None) -> List[str]:
-    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
+    fontNameOrPath = f"{fontNameOrPath}" if isinstance(fontNameOrPath, Path) else fontNameOrPath
     return dB.listOpenTypeFeatures(fontNameOrPath)
+
 
 def resetVariations():
     dB.fontVariations(None)
 
+
 def fontVariations(**axes: float):
     dB.fontVariations(**axes)
 
+
 def listFontVariations(fontNameOrPath: Optional[Union[str, Path]] = None) -> List:
-    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
+    fontNameOrPath = f"{fontNameOrPath}" if isinstance(fontNameOrPath, Path) else fontNameOrPath
     return dB.listFontVariations(fontNameOrPath)
 
+
 def listNamedInstances(fontNameOrPath: Optional[Union[str, Path]] = None) -> List[str]:
-    fontNameOrPath = f'{fontNameOrPath}' if isinstance(fontNameOrPath, Path) else fontNameOrPath
+    fontNameOrPath = f"{fontNameOrPath}" if isinstance(fontNameOrPath, Path) else fontNameOrPath
     return dB.listNamedInstances(fontNameOrPath)

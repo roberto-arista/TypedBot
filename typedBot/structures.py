@@ -5,34 +5,34 @@
 # ---------- #
 
 # -- Modules -- #
-from dataclasses import dataclass, astuple
-from enum import Enum, auto
+from dataclasses import astuple, dataclass
+from enum import Enum
 
 
 # -- Structures + Enumerations -- #
-class AutoName(Enum):
-    def _generate_next_value_(name, start, count, last_values):
-        return name
+class Alignment(Enum):
+    left = "left"
+    center = "center"
+    right = "right"
 
-class Alignment(AutoName):
-    left = auto()
-    center = auto()
-    right = auto()
 
-class LineCap(AutoName):
-    round = auto()
-    butt = auto()
-    square = auto()
+class LineCap(Enum):
+    round = "round"
+    butt = "butt"
+    square = "square"
 
-class LineJoin(AutoName):
-    round = auto()
-    miter = auto()
-    bevel = auto()
 
-class Underline(AutoName):
-    single = auto()
-    double = auto()
-    thick = auto()
+class LineJoin(Enum):
+    round = "round"
+    miter = "miter"
+    bevel = "bevel"
+
+
+class Underline(Enum):
+    single = "single"
+    double = "double"
+    thick = "thick"
+
 
 # class OTFeature(AutoName):
 #     c2pc = auto()
@@ -91,6 +91,7 @@ class Color:
     def __iter__(self):
         return iter(astuple(self))
 
+
 @dataclass
 class CMYKColor:
     c: float
@@ -104,6 +105,7 @@ class CMYKColor:
 
     def __iter__(self):
         return iter(astuple(self))
+
 
 @dataclass
 class Box:
