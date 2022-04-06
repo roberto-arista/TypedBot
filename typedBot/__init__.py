@@ -240,4 +240,7 @@ __all__ = [
     "resetVariations",
     "listFontVariations",
     "listNamedInstances",
+    "BLACK",
+    "TRANSPARENT",
+    "WHITE",
 ]
