@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "typedbot"
+version = "0.0.3"
+description = "An annotated layer on top of DrawBot"
+license = "BSD 3-Clause License"
+authors = ["Roberto Arista <arista.rob@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+drawbot = { git = "https://github.com/typemytype/drawbot", branch = "master" }
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+black = "^22.1.0"
+isort = "^5.10.1"
+pytest = "^7.1.1"
+
+[tool]
+black = { line-length = 120 }
+isort = { profile = "black" }
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -5,13 +5,12 @@
 # ------ #
 
 
+# -- Modules -- #
 import os
 from pathlib import Path
-
-# -- Modules -- #
 from typing import Dict, Optional, Union
 
-from AppKit import NSColor, NSData  # PDFDocument
+from AppKit import NSColor, NSData, PDFDocument
 from drawBot import _drawBotDrawingTool as dB
 from fontTools.misc.transform import Transform
 
@@ -297,5 +296,5 @@ def printImage(pdfPath: Optional[Path] = None):
     dB.printImage(f"{pdfPath}")
 
 
-def pdfImage():  # -> PDFDocument:
+def pdfImage() -> PDFDocument:
     return dB.pdfImage()

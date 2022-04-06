@@ -5,17 +5,17 @@
 # --------- #
 
 # -- Modules -- #
-import drawBot as dB
+from importlib import import_module
+from pathlib import Path
+
+from drawBot import _drawBotDrawingTool as dB
+from PIL import Image, ImageChops
+from pytest import mark, param
+
 import typedBot as tB
 
-from pytest import param, mark
-from pathlib import Path
-from importlib import import_module
-from PIL import Image, ImageChops
-
-
 # -- Test Parameters -- #
-TESTS_FOLDER = Path('tests')
+TESTS_FOLDER = Path("tests")
 
 data = [
     param("centeredTransformBezierPath.py"),
@@ -62,13 +62,14 @@ def runScriptAndSaveImage(path: Path, annotated: bool = False):
     mod.newDrawing()
     import_module(f"{path.parent.name}.{path.stem}")
     if annotated:
-        imgPath = TESTS_FOLDER / 'images' / f'{path.stem}_tB.png'
+        imgPath = TESTS_FOLDER / "images" / f"{path.stem}_tB.png"
         mod.savePNG(imgPath)
     else:
-        imgPath = TESTS_FOLDER / 'images' / f'{path.stem}_dB.png'
+        imgPath = TESTS_FOLDER / "images" / f"{path.stem}_dB.png"
         mod.saveImage(imgPath)
     mod.endDrawing()
     return imgPath
+
 
 def compareImages(path1: Path, path2: Path) -> bool:
     im1 = Image.open(path1)
@@ -80,8 +81,8 @@ def compareImages(path1: Path, path2: Path) -> bool:
 # -- Tests -- #
 @mark.parametrize("name", data)
 def test_comparison(name):
-    tBScript = TESTS_FOLDER / 'tB_scripts' / name
-    dBScript = TESTS_FOLDER / 'dB_scripts' / name
+    tBScript = TESTS_FOLDER / "tB_scripts" / name
+    dBScript = TESTS_FOLDER / "dB_scripts" / name
     assert tBScript.exists()
     assert dBScript.exists()
     tB_path = runScriptAndSaveImage(path=tBScript, annotated=True)
