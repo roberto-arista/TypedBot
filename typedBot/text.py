@@ -212,7 +212,7 @@ def textBox(txt: Union[str, FormattedString], box: Box, align: Optional[Alignmen
 def textSize(
     txt: str, align: Optional[Alignment] = None, width: Optional[float] = None, height: Optional[float] = None
 ):
-    dB.textSize(txt, align.name if align else None, width, height)
+    return dB.textSize(txt, align.name if align else None, width, height)
 
 
 def textOverflow(txt: str, box: Box, align: Alignment = Alignment.left) -> str:
