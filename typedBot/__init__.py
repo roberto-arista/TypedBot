@@ -1,4 +1,4 @@
-from typedBot.canvas import (
+from typedbot.canvas import (
     endDrawing,
     frameDuration,
     getAllSizes,
@@ -34,7 +34,7 @@ from typedBot.canvas import (
     translate,
     width,
 )
-from typedBot.colors import (
+from typedbot.colors import (
     blendMode,
     cmykFill,
     cmykLinearGradient,
@@ -51,7 +51,7 @@ from typedBot.colors import (
     shadow,
     stroke,
 )
-from typedBot.images import (
+from typedbot.images import (
     ImageObject,
     image,
     imagePixelColor,
@@ -59,7 +59,7 @@ from typedBot.images import (
     imageSize,
     numberOfPages,
 )
-from typedBot.shapes import (
+from typedbot.shapes import (
     BezierPath,
     arc,
     arcTo,
@@ -81,7 +81,7 @@ from typedBot.shapes import (
     rect,
     strokeWidth,
 )
-from typedBot.structures import (
+from typedbot.structures import (
     BLACK,
     TRANSPARENT,
     WHITE,
@@ -94,7 +94,7 @@ from typedBot.structures import (
     Point,
     Underline,
 )
-from typedBot.text import (
+from typedbot.text import (
     FormattedString,
     baselineShift,
     fallbackFont,

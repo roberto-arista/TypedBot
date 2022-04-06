@@ -12,7 +12,7 @@ from drawBot import _drawBotDrawingTool as dB
 from PIL import Image, ImageChops
 from pytest import mark, param
 
-import typedBot as tB
+import typedbot as tB
 
 # -- Test Parameters -- #
 TESTS_FOLDER = Path("tests")
