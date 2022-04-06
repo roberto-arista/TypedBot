@@ -8,9 +8,9 @@
 # -- Modules -- #
 import os
 from pathlib import Path
-from typing import Dict, Optional, Union
+from typing import Dict, Optional
 
-from AppKit import NSColor, NSData, PDFDocument
+# from AppKit import NSColor, NSData, PDFDocument
 from drawBot import _drawBotDrawingTool as dB
 from fontTools.misc.transform import Transform
 
@@ -203,8 +203,8 @@ def saveJPG(
     multipage: bool = False,
     imageJPEGCompressionFactor: float = 1.0,
     imageJPEGProgressive: bool = True,
-    imageFallbackBackgroundColor: Union[NSColor, Color] = WHITE,
-    imageColorSyncProfileData: Optional[NSData] = None,
+    imageFallbackBackgroundColor: Color = WHITE,
+    imageColorSyncProfileData=None,
 ):
     assert path.suffix.lower() == ".jpg"
     dB.saveImage(
@@ -225,7 +225,7 @@ def saveTIF(
     antiAliasing: bool = True,
     multipage: bool = False,
     imageTIFFCompressionMethod: Optional[str] = None,
-    imageColorSyncProfileData: Optional[NSData] = None,
+    imageColorSyncProfileData=None,
 ):
     assert path.suffix.lower() in [".tif", ".tiff"]
     dB.saveImage(
@@ -244,8 +244,8 @@ def saveGIF(
     antiAliasing: bool = True,
     multipage: bool = False,
     imageGIFDitherTransparency: bool = False,
-    imageGIFRGBColorTable: Optional[NSData] = None,
-    imageColorSyncProfileData: Optional[NSData] = None,
+    imageGIFRGBColorTable=None,
+    imageColorSyncProfileData=None,
     imageGIFLoop: bool = True,
 ):
     assert path.suffix.lower() == ".gif"
@@ -273,7 +273,7 @@ def saveMP4(
     antiAliasing: bool = True,
     imagePNGGamma: Optional[float] = None,
     imagePNGInterlaced: bool = True,
-    imageColorSyncProfileData: Optional[NSData] = None,
+    imageColorSyncProfileData=None,
 ):
     assert path.suffix.lower() == ".mp4"
     dB.saveImage(
@@ -296,5 +296,5 @@ def printImage(pdfPath: Optional[Path] = None):
     dB.printImage(f"{pdfPath}")
 
 
-def pdfImage() -> PDFDocument:
+def pdfImage():  # -> PDFDocument:
     return dB.pdfImage()
