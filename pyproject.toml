@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "typedbot"
-version = "0.0.4"
+version = "0.0.5"
 description = "An annotated layer on top of DrawBot"
 license = "BSD 3-Clause License"
 authors = ["Roberto Arista <arista.rob@gmail.com>"]
